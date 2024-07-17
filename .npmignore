@@ -1,0 +1,22 @@
+/node_modules
+/Versions
+
+#avoid packaging of .ts files
+/apps
+/components
+/componentsApp
+/configFiles
+/dockerlogs
+/framework
+/helper
+/logs
+/pageobjects
+/screenobjects
+/slackNotification
+/specs
+/tempDownload
+/testdata
+/tokens
+/webservice
+/allure-report
+/allure-results

@@ -1,0 +1,90 @@
+pipeline {
+    agent any
+    options {
+        timeout(time: 1, unit: 'HOURS') 
+    }
+    environment {
+        AGENT_INSTANCE_ID = 'XYZ'
+        ParallelJobsFilePath = '/var/lib/state-jenkins/ParallelJobsOnSlave02.txt'
+    }
+    stages{
+        stage('start Docker server machine'){
+            agent {
+                label 'master'
+            }
+            steps{
+                script{
+                    def ParallelJobsOnSlave02 = readFile(file: "${ParallelJobsFilePath}");
+                    ParallelJobsOnSlave02 = Integer.parseInt(ParallelJobsOnSlave02.replaceAll("[\n\r]", ""));
+                    echo "Content of ParallelJobsOnSlave02.txt file $ParallelJobsOnSlave02"
+                    if(ParallelJobsOnSlave02==0){
+                        writeFile(file: "${ParallelJobsFilePath}", text: '1')
+                        echo "Content of ParallelJobsOnSlave02.txt set as 1"
+                    } else if(ParallelJobsOnSlave02==1){
+                        writeFile(file: "${ParallelJobsFilePath}", text: '2')
+                        echo "Content of ParallelJobsOnSlave02.txt set as 2"
+                    }
+                    echo "Starting agent instance.."
+                    sh "aws --region ap-southeast-1 ec2 start-instances --instance-ids ${AGENT_INSTANCE_ID}"
+                }
+            }
+        }
+        stage('run test cases'){
+            agent {
+                label 'slave-02'
+            }
+            environment{
+                ENV = "${params.ENV}"
+                GROUP = "${params.GROUP}"
+                ReplicateExistingTests = "${params.ReplicateExistingTests}"
+                JustAttemptExistingTest = "${params.JustAttemptExistingTest}"
+            }
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], extensions: [], userRemoteConfigs: [[credentialsId: 'GitLab-Access', url: 'git@gitlab.in:/testautomation.git']]])
+                // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // run the tests    
+                sh "bash runtest.sh"
+                // }
+            }
+            post{
+                always{
+                    allure includeProperties: false,
+                      jdk: '',
+                      results: [[path: 'allure-results']]
+                    cleanWs()
+                }
+            }
+        }
+        stage('stop Docker server machine'){
+            // when { equals expected: 'true', actual: "${params.StopAgentPostExecution}" }
+            agent {
+                label 'master'
+            }
+            steps{
+                script{
+                    def ParallelJobsOnSlave02 = readFile(file: "${ParallelJobsFilePath}");
+                    ParallelJobsOnSlave02 = Integer.parseInt(ParallelJobsOnSlave02.replaceAll("[\n\r]", ""));
+                    echo "Content of ParallelJobsOnSlave02.txt file $ParallelJobsOnSlave02"
+                    if(ParallelJobsOnSlave02==1){
+                        writeFile(file: "${ParallelJobsFilePath}", text: '0')
+                        if("${params.StopAgentPostExecution}"=='true'){
+                            echo "Stopping agent instance.."
+                            sh "aws --region ap-southeast-1 ec2 stop-instances --instance-ids ${AGENT_INSTANCE_ID}"
+                        }
+                    } else if(ParallelJobsOnSlave02==2){
+                        writeFile(file: "${ParallelJobsFilePath}", text: '1');
+                        echo 'one more job already running, skipped stopping the server'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Execution completed'
+        }
+        failure {
+            echo 'Execution failed'
+        }
+    }
+}

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+#since compile take care of eslint-fix as well
+#npm run eslint-fix
+npm run compile

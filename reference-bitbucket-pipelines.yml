@@ -1,0 +1,152 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: timbru31/java-node
+pipelines:
+  custom:
+    run-api:   #Name of pipeline
+        - variables: 
+          - name: ENV
+            default: qa
+            allowed-values:
+              - qa
+              - dev
+          - name: GROUP
+            default: Smoke
+            allowed-values:
+              - Smoke
+          - name: SEND_SLACK_NOTIFICATION
+            default: true
+            allowed-values:
+              - true
+              - false
+        - step:
+            name: Build and Run API Sanity
+            # image: ghcr.io/puppeteer/puppeteer:latest
+            size: 4x
+            runs-on:
+              - self.hosted
+              - linux
+            caches:
+              - node
+            script:
+              # - npm install
+              # - npm run compile
+              - echo https://automation.site/s3/api/$ENV/$BITBUCKET_BUILD_NUMBER/index.html > notifications/allureReportLink.txt
+              - echo $BITBUCKET_STEP_TRIGGERER_UUID > notifications/whoTriggeredJob.txt
+              - echo $BITBUCKET_BRANCH > notifications/branchName.txt
+              - /bin/bash shellScripts/executeTest_API.sh $ENV $GROUP $SEND_SLACK_NOTIFICATION || true
+            artifacts:
+              # - allure-report/**
+              - allure-results/**
+        - step:
+            name: Report
+            size: 4x
+            runs-on:
+              - self.hosted
+              - linux
+            caches:
+              - node
+            image: timbru31/java-node
+            script:
+              # - echo $BITBUCKET_GIT_HTTP_ORIGIN/pipelines/results/$BITBUCKET_BUILD_NUMBER/steps/$BITBUCKET_STEP_UUID/artifacts > notifications/allureReportLink.txt
+              - /bin/bash shellScripts/generateReportAndCopy.sh || true
+            artifacts:
+              - allure-report/**
+        - step:
+            name: Deploy report to S3
+            deployment: production
+            script:
+              - pipe: atlassian/aws-s3-deploy:0.3.8
+                variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  AWS_DEFAULT_REGION: 'ap-south-1'
+                  S3_BUCKET: 'qaautmation.info/api/$ENV/$BITBUCKET_BUILD_NUMBER'
+                  LOCAL_PATH: 'allure-report'
+                  ACL: 'public-read'
+
+    run-ui:   #Name of pipeline
+        - variables: 
+            - name: ENV
+              default: qa
+              allowed-values:
+              - qa
+              - dev
+            - name: GROUP
+              default: Smoke
+              allowed-values:
+              - Smoke
+            - name: PLATFORM
+              default: lambdatestApp
+              allowed-values:
+              - web
+              - lambdatestApp
+            - name: APP_URL
+              #default app cloud url
+              default: lt://APP1016033751686729
+            - name: HEADLESS
+              default: true
+              allowed-values:
+              - true
+              - false
+            - name: SEND_SLACK_NOTIFICATION
+              default: true
+              allowed-values:
+              - true
+              - false
+        - step:
+            name: Build and Run UI Sanity
+            size: 4x
+            runs-on:
+              - self.hosted
+              - linux
+            # since there would delay in releasing puppeteer version matching to latest chrome version
+            # using puppeteer 19.6.3 this supports 109 chrome
+            # even from package json fixed chromedriver version to 109
+            image: ghcr.io/puppeteer/puppeteer:19.6.3
+            caches:
+              - node
+            script:
+              # - npm install
+              # - npm run compile
+              - echo https://automation.site/s3/ui/$ENV/$BITBUCKET_BUILD_NUMBER/index.html > notifications/allureReportLink.txt
+              - echo $BITBUCKET_STEP_TRIGGERER_UUID > notifications/whoTriggeredJob.txt
+              - echo $BITBUCKET_BRANCH > notifications/branchName.txt
+              - /bin/bash shellScripts/executeTest_UI.sh $ENV $GROUP $PLATFORM $APP_URL $HEADLESS $SEND_SLACK_NOTIFICATION || true
+            artifacts:
+              # - allure-report/**
+              - allure-results/**
+              - logs/**
+        - step:
+            name: Report
+            size: 4x
+            runs-on:
+              - self.hosted
+              - linux
+            caches:
+              - node
+            image: timbru31/java-node
+            script:
+              # - echo $BITBUCKET_GIT_HTTP_ORIGIN/pipelines/results/$BITBUCKET_BUILD_NUMBER/steps/$BITBUCKET_STEP_UUID/artifacts > notifications/allureReportLink.txt
+              - /bin/bash shellScripts/generateReportAndCopy.sh || true
+            artifacts:
+              - allure-report/**
+        - step:
+            name: Deploy report to S3
+            deployment: production
+            script:
+              - pipe: atlassian/aws-s3-deploy:0.3.8
+                variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  AWS_DEFAULT_REGION: 'ap-south-1'
+                  S3_BUCKET: 'qaautmation.info/ui/$ENV/$BITBUCKET_BUILD_NUMBER'
+                  LOCAL_PATH: 'allure-report'
+                  ACL: 'public-read'
+# definitions:
+#   services:
+#     docker:
+#       memory: 7168

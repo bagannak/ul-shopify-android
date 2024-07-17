@@ -1,0 +1,56 @@
+stages:
+  - test
+  - deploy
+
+.test_run_job_template: &test_run_job_template
+  variables:
+    Branch: main
+    PROJECT_NAME: 'Sample TS reference project'
+
+  before_script:
+    - echo '-----Running before script-----'
+    - docker exec -i $(docker ps -qf "name=^standalone_chrome_lms1$") /bin/sh -c "sudo chmod -R 777 /home/seluser/Downloads;exit"
+    - echo JOB_NAME=${CI_JOB_NAME} > build.env
+    - export NOW=$(date +'%m-%d-%Y')
+    - echo "${CI_PAGES_URL}/pipeline_${CI_PIPELINE_ID}_${NOW}_${CI_JOB_NAME}">notifications/allureReportLink.txt
+
+  script:
+    - echo '-----Running test cases-----'
+    - npm i
+    - Env=$Env Platform=$Platform Browser=$Browser Group=$Group SendNotification=$SendNotification Os=$Os npm run test-ui
+
+  after_script:
+    - echo '-----Running after script-----'
+
+  artifacts:
+    when: always
+    reports:
+      dotenv: build.env
+    paths:
+      - allure-report/
+      - allure-results/
+    expire_in: 5 days
+  tags:
+    - QA-Automation
+  
+sanity_test:
+  <<: *test_run_job_template
+  stage: test
+  variables:
+   Env: qa
+   Group: Sanity
+  allow_failure: true
+  only:
+    - main
+#  when: manual
+
+regression_test:
+  <<: *test_run_job_template
+  stage: test
+  variables:
+   Env: qa
+   Group: Sanity
+  allow_failure: true
+  only:
+    - $Branch
+  when: manual
