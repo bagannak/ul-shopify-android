@@ -28,6 +28,8 @@ export { SwipeUtil } from './ui/screens/utils/swipeUtil';
 
 // mobile common screens
 export { LoginScreen } from './ui/screens/common/loginScreen';
+export { OtpScreen } from './ui/screens/common/otpScreen';
 
 // mobile user actions
 export { LoginActions } from './ui/screens/userActions/loginActions';
+export { OtpActions } from './ui/screens/userActions/otpActions';
