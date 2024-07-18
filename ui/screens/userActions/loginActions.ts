@@ -1,20 +1,23 @@
 import { Browser } from 'webdriverio';
 import { BaseScreen, LoginScreen } from '../../../uiExport';
 import { HomeScreen } from '../common/homeScreen';
+import { ProfileScreen } from '../common/profileScreen';
 
 export class LoginActions extends BaseScreen {
-  loginScreen:LoginScreen;
+  profileScreen: ProfileScreen;
+  loginScreen: LoginScreen;
+  homeScreen: HomeScreen;
 
-  homeScreen:HomeScreen;
-
-  constructor(driver:Browser<'async'>) {
+  constructor(driver: Browser<'async'>) {
     super(driver);
+    this.profileScreen = new ProfileScreen(driver);
     this.loginScreen = new LoginScreen(driver);
     this.homeScreen = new HomeScreen(driver);
+
   }
 
-  async login(accountDetails:{username:string, password:string}) {
+  async login(accountDetails: { email: string, password: string }) {
+    await this.profileScreen.tapOnLoginButton();
     await this.loginScreen.fillLoginDetails(accountDetails);
-    await this.waitForDisplayed(await this.homeScreen.productLabelEle());
   }
 }
