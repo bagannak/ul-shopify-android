@@ -36,6 +36,9 @@ describe(specName, () => {
  */
   it('verify login', async () => {
     await homeScreen.tapOnProfileIcon();
-    await loginActions.login({ email: 'abc@gmail.com', password: '12345' });
+    await loginActions.login({
+      email: "ulshopify@ultralesson.com",
+      password: "12345",
+    });
   });
 });
