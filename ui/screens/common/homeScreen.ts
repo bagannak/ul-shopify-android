@@ -6,15 +6,16 @@ export class HomeScreen extends BaseScreen {
   private selectors = {
     productLabel: {android: "//*[@text='PRODUCTS']",ios: "//*[@name='inp-fullname']"},
     welcomeMsg:{android:"//*[@text='Welcome Back!!']",ios:""},
+    searchBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-search']",ios:""},
     profileIconText: { android: "//*[@text='Profile']", ios: "" },
-    profileIcon: { android: "#com.ultralesson.ulshopify:id/icon-profile",ios: ""},
-    homeIcon: { android: "#com.ultralesson.ulshopify:id/icon-home", ios: "" },
+    profileIcon: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-profile']",ios: ""},
+    homeIcon: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-home']", ios: "" },
     homeIconText: { android: "//*[@text='Home']", ios: "" },
-    cartIcon: { android: "#com.ultralesson.ulshopify:id/icon-cart", ios: "" },
+    cartIcon: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-cart']", ios: "" },
     cartIconText: { android: "//*[@text='Cart']", ios: "" },
-    exploreIcon: {android: "#com.ultralesson.ulshopify:id/icon-explore",ios: ""},
+    exploreIcon: {android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-explore']",ios: ""},
     exploreIconText: { android: "//*[@text='Explore']", ios: "" },
-    trackIcon: {android: "#com.ultralesson.ulshopify:id/icon-track-order",ios: ""},
+    trackIcon: {android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-track-order']",ios: ""},
     trackIconText: { android: "//*[@text='Track']", ios: "" },
   };
 
