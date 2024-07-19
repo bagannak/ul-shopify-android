@@ -38,3 +38,4 @@ export { CartScreen } from './ui/screens/common/cartScreen';
 export { LoginActions } from './ui/screens/userActions/loginActions';
 export { HomeScreenActions } from './ui/screens/userActions/homeActions'
 export { ExploreScreenActions } from './ui/screens/userActions/exploreScreenActions';
+export { CartActions } from './ui/screens/userActions/cartActions';
