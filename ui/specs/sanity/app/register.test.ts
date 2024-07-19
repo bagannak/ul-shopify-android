@@ -4,12 +4,13 @@
 
 
 import { Browser } from 'webdriverio';
-import { Driver, LoginActions, LoginScreen } from '../../../../uiExport';
+import { Driver, LoginActions, LoginScreen, OtpActions } from '../../../../uiExport';
 import { HomeScreen } from '../../../screens/common/homeScreen';
 import { ProfileScreen } from '../../../screens/common/profileScreen';
 import { RegisterActions } from '../../../screens/userActions/registerActions';
 import { RegisterScreen } from '../../../screens/common/registerScreen';
 import { expect } from 'chai';
+import testData from '../../../resources/testdata/qa/testData.qa.json';
 
 /**
 * Home Page Validation
@@ -20,7 +21,7 @@ let homeScreen: HomeScreen;
 let profileScreen: ProfileScreen;
 let registerActions: RegisterActions;
 let registerScreen: RegisterScreen;
-let loginScreen: LoginScreen;
+let otpActions: OtpActions;
 
 
 declare let reporter: any;
@@ -33,7 +34,7 @@ describe(specName, () => {
         profileScreen = new ProfileScreen(driver);
         registerActions = new RegisterActions(driver);
         registerScreen = new RegisterScreen(driver);
-        loginScreen = new LoginScreen(driver);
+        otpActions = new OtpActions(driver);
     });
 
 
@@ -65,9 +66,31 @@ describe(specName, () => {
 
     it("verify the register user feature with valid user data.", async () => {
         await homeScreen.tapOnProfileIcon();
-        await registerActions.registerUser({ fullname: "abc", email: "abc@gmail.com", password: "12345", confirmPassword: "12345", mobileNum: "9876543210" });
+        await registerActions.registerUser(testData.register_user_valid_data);
+        await otpActions.enterOtpAndSubmit('0000');
         expect(await homeScreen.isRegSuccessMsgDisplayed()).to.be.true;
     })
+
+    it("verify the register user feature with mobile num less than 10 digits", async () => {
+        await homeScreen.tapOnProfileIcon();
+        await registerActions.registerUser(testData.register_user_invalid_mob_num);
+        expect(await homeScreen.isRegSuccessMsgDisplayed()).to.be.true;
+    })
+
+
+    it("verify register user should fail if password has less than or equal to 4 characters", async () => {
+        await homeScreen.tapOnProfileIcon();
+        await registerActions.registerUser(testData.register_user_invalid_password_length);
+        console.log("Hemanth ", testData.register_user_invalid_password_length);
+        expect(await registerScreen.isPassMinLengthMsgDisplayed()).to.be.true;
+    })
+
+    it("verify register user should fail if the value of password and confirm password are not the same", async () => {
+        await homeScreen.tapOnProfileIcon();
+        await registerActions.registerUser(testData.register_user_confirm_password_mismatch);
+        expect(await registerScreen.isConfirmPassNotSameMsgDisplayed()).to.be.true;
+    })
+
 
 
 });

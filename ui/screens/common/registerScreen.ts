@@ -10,7 +10,9 @@ export class RegisterScreen extends BaseScreen {
         mobileNumberInput: { android: "//*[@text='Enter your mobile number']", ios: '' },
         registerButton: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-register']", ios: '' },
         loginLink: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-login']", ios: '' },
-        ulShopifyLink: { android: "//*[@text='Ul-Shopify']", ios: "" }
+        ulShopifyLink: { android: "//*[@text='Ul-Shopify']", ios: "" },
+        passMinLengthMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-password-should-be-minimum-of-5-characters']", ios: "" },
+        confirmPassIsNotSameMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-confirm-password-is-not-matched-with-password']", ios: "" },
     };
 
 
@@ -44,6 +46,15 @@ export class RegisterScreen extends BaseScreen {
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.ulShopifyLink));
     }
 
+    async passMinLengthMsgEle(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.passMinLengthMsg));
+    }
+
+    async confirmPassIsNotSameMsgEle(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.confirmPassIsNotSameMsg));
+    }
+
+
 
     async isFullNameInputFieldIsPresent() {
         return this.isDisplayed(await this.fullNameInputEle());
@@ -65,6 +76,14 @@ export class RegisterScreen extends BaseScreen {
 
     async isMobileNumInputFieldPresent() {
         return this.isDisplayed(await this.mobileNumberInputEle());
+    }
+
+    async isPassMinLengthMsgDisplayed() {
+        return this.isDisplayed(await this.passMinLengthMsgEle());
+    }
+
+    async isConfirmPassNotSameMsgDisplayed() {
+        return this.isDisplayed(await this.confirmPassIsNotSameMsgEle());
     }
 
 
@@ -98,11 +117,11 @@ export class RegisterScreen extends BaseScreen {
 
 
     async fillRegisterDetails(accountDetails: { fullname: string, email: string, password: string, confirmPassword: string, mobileNum: string }) {
-        await this.enterFullName("abcd");
-        await this.enterEmail("abc@gmail.com");
-        await this.enterPassword("12345");
-        await this.enterConfirmPassword("12345");
-        await this.enterMobileNumber('1234567890');
+        await this.enterFullName(accountDetails.fullname);
+        await this.enterEmail(accountDetails.email);
+        await this.enterPassword(accountDetails.password);
+        await this.enterConfirmPassword(accountDetails.confirmPassword);
+        await this.enterMobileNumber(accountDetails.mobileNum);
         await this.tapRegisterButton();
     }
 
