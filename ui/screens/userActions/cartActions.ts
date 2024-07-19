@@ -7,7 +7,7 @@ export class CartActions extends BaseScreen {
   homeScreen: HomeScreen;
   exploreScreen: ExploreScreen;
 
-  constructor(driver: Browser<'async'>) {
+  constructor(driver: Browser<"async">) {
     super(driver);
     this.cartScreen = new CartScreen(driver);
     this.homeScreen = new HomeScreen(driver);
@@ -17,7 +17,7 @@ export class CartActions extends BaseScreen {
   async clickOnProduct() {
     // const productsEle = await this.cartScreen.productEle();
     // await this.waitForDisplayed(productsEle[0]);
-    const product = await this.exploreScreen.productCardEle()
+    const product = await this.exploreScreen.productCardEle();
     await this.click(product);
   }
 
@@ -37,6 +37,23 @@ export class CartActions extends BaseScreen {
     const deleteIcon = await this.cartScreen.deleteIconEle();
     await this.waitForDisplayed(deleteIcon);
     await this.click(deleteIcon);
-    await this.waitForDisplayed(await this.cartScreen.deleteIconEle());
+  }
+
+  async increaseTheItemQuantity() {
+    const incrementButton = await this.cartScreen.incrementButtonEle();
+    await this.waitForDisplayed(incrementButton);
+    await this.click(incrementButton);
+  }
+
+  async decreaseTheItemQuantity() {
+    const decrementButton = await this.cartScreen.decrementButtonEle();
+    await this.waitForDisplayed(decrementButton);
+    await this.click(decrementButton);
+  }
+
+  async clickOnContinueShoppingButton() {
+    const continueShoppingButtonEle = await this.cartScreen.continueShoppingButtonEle();
+    await this.waitForDisplayed(continueShoppingButtonEle);
+    await this.click(continueShoppingButtonEle);
   }
 }

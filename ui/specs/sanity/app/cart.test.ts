@@ -40,7 +40,7 @@ describe(specName, () => {
     await Driver.closeDrivers([driver]);
   });
 
-  it('Verify adding an item to the cart', async () => {
+  it('Verify adding an item to the cart and removing item from the cart', async () => {
     await homeScreenActions.navigateTo(
       await homeScreen.productCategoryEle("clothing")
     );
@@ -48,13 +48,28 @@ describe(specName, () => {
     await cartActions.clickOnAddToCartButton();
     await cartActions.clickOnGoToCart();
     expect(await cartScreen.getProductInCartEleName()).to.equal('Elegant Suite');
+    await cartActions.deleteProductInCart();
+    expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle()))
+      .to.be.true;
+    await cartActions.clickOnContinueShoppingButton();
   });
 
-  it('Verify removing an item from the cart', async () => {
-    await cartActions.deleteProductInCart();
-    expect(await baseScreen.isDisplayed(
-        await cartScreen.emptyCartMessageEle()
-    )).to.be.true;
-  })
+  it("Verify increasing the quantity of an item", async () => {
+    await homeScreenActions.navigateTo(
+      await homeScreen.productCategoryEle("clothing")
+    );
+    await cartActions.clickOnProduct();
+    await cartActions.clickOnAddToCartButton();
+    await cartActions.clickOnGoToCart();
+    await cartActions.increaseTheItemQuantity();
+    expect(await cartScreen.getQuantityCount()).to.be.equal("2");
+    expect(await cartScreen.getTotalAmount()).to.be.equal("₹ 499.98");
+  });
+
+  it("Verify decreasing the quantity of an item", async () => {
+    await cartActions.decreaseTheItemQuantity();
+    expect(await cartScreen.getQuantityCount()).to.be.equal("1");
+    expect(await cartScreen.getTotalAmount()).to.be.equal("₹ 249.99");
+  });
 
 });

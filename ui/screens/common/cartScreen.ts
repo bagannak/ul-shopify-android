@@ -59,6 +59,18 @@ export class CartScreen extends BaseScreen {
         '//*[@resource-id="com.ultralesson.ulshopify:id/txt-basket-total"]',
       ios: "",
     },
+
+    quantityCount: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-quantity"]',
+      ios: "",
+    },
+
+    continueShoppingButton: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-continue-shopping"]',
+      ios: "",
+    },
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -120,6 +132,19 @@ export class CartScreen extends BaseScreen {
 
   async getTotalAmount(): Promise<string> {
     const totalAmountEle = await this.totalAmountEle();
-    return this.getText(totalAmountEle); 
+    return await this.getText(totalAmountEle);
+  }
+
+  async quantityCountEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.quantityCount.android);
+  }
+
+  async getQuantityCount(): Promise<string> {
+    const quantityCountEle = await this.quantityCountEle();
+    return await this.getText(quantityCountEle);
+  }
+
+  async continueShoppingButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.continueShoppingButton.android);
   }
 }
