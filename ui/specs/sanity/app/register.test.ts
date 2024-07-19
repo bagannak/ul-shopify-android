@@ -4,7 +4,7 @@
 
 
 import { Browser } from 'webdriverio';
-import { Driver, LoginActions } from '../../../../uiExport';
+import { Driver, LoginActions, LoginScreen } from '../../../../uiExport';
 import { HomeScreen } from '../../../screens/common/homeScreen';
 import { ProfileScreen } from '../../../screens/common/profileScreen';
 import { RegisterActions } from '../../../screens/userActions/registerActions';
@@ -20,6 +20,7 @@ let homeScreen: HomeScreen;
 let profileScreen: ProfileScreen;
 let registerActions: RegisterActions;
 let registerScreen: RegisterScreen;
+let loginScreen: LoginScreen;
 
 
 declare let reporter: any;
@@ -32,6 +33,7 @@ describe(specName, () => {
         profileScreen = new ProfileScreen(driver);
         registerActions = new RegisterActions(driver);
         registerScreen = new RegisterScreen(driver);
+        loginScreen = new LoginScreen(driver);
     });
 
 
@@ -53,6 +55,20 @@ describe(specName, () => {
         expect(await registerScreen.isConfirmPasswordInputFieldPresent()).to.be.true;
         expect(await registerScreen.isMobileNumInputFieldPresent()).to.be.true;
     })
+
+    it("Verify the UI-shopify link in the register screen is clickable.", async () => {
+        await homeScreen.tapOnProfileIcon();
+        await profileScreen.tapOnRegisterButton();
+        await registerScreen.tapOnUlShopifyLink();
+        expect(await homeScreen.isUserOnHomeScreen()).to.be.true;
+    })
+
+    it("verify the register user feature with valid user data.", async () => {
+        await homeScreen.tapOnProfileIcon();
+        await registerActions.registerUser({ fullname: "abc", email: "abc@gmail.com", password: "12345", confirmPassword: "12345", mobileNum: "9876543210" });
+        expect(await homeScreen.isRegSuccessMsgDisplayed()).to.be.true;
+    })
+
 
 });
 

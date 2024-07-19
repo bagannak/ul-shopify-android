@@ -8,7 +8,9 @@ export class RegisterScreen extends BaseScreen {
         passwordInput: { android: "//*[@text='Enter your password']", ios: '' },
         confirmPasswordInput: { android: "//*[@text='Confirm your password']", ios: '' },
         mobileNumberInput: { android: "//*[@text='Enter your mobile number']", ios: '' },
-        registerButton: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-register']", ios: '' }, loginLink: { android: "//android.widget.TextView[@text='Login']", ios: '~btn-login' },
+        registerButton: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-register']", ios: '' },
+        loginLink: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-login']", ios: '' },
+        ulShopifyLink: { android: "//*[@text='Ul-Shopify']", ios: "" }
     };
 
 
@@ -32,6 +34,14 @@ export class RegisterScreen extends BaseScreen {
     }
     async registerButtonEle(): Promise<Element<'async'>> {
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerButton));
+    }
+
+    async loginLinkText(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginLink));
+    }
+
+    async ulShopifyLinkText(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.ulShopifyLink));
     }
 
 
@@ -78,6 +88,14 @@ export class RegisterScreen extends BaseScreen {
         await this.click(await this.registerButtonEle());
     }
 
+    async tapOnLoginLink() {
+        await this.click(await this.loginLinkText());
+    }
+
+    async tapOnUlShopifyLink() {
+        await this.click(await this.ulShopifyLinkText());
+    }
+
 
     async fillRegisterDetails(accountDetails: { fullname: string, email: string, password: string, confirmPassword: string, mobileNum: string }) {
         await this.enterFullName("abcd");
@@ -87,7 +105,7 @@ export class RegisterScreen extends BaseScreen {
         await this.enterMobileNumber('1234567890');
         await this.tapRegisterButton();
     }
-    
+
 
 
 }

@@ -12,10 +12,12 @@ export class RegisterActions extends BaseScreen {
         super(driver);
         this.registerScreen = new RegisterScreen(driver);
         this.otpActions = new OtpActions(driver);
+        this.profileScreen = new ProfileScreen(driver);
     }
 
 
     async registerUser(accountDetails: { fullname: string, email: string, password: string, confirmPassword: string, mobileNum: string }) {
+        await this.profileScreen.tapOnRegisterButton();
         await this.registerScreen.fillRegisterDetails(accountDetails);
         await this.otpActions.enterOtpAndSubmit('0000');
     }

@@ -25,6 +25,7 @@ export class HomeScreen extends BaseScreen {
       audioSets:{android:"//*[@text='Audio sets']",ios:""},
       books:{android:"//*[@text='Books']",ios:""}
     }
+    ,    registerationSuccessfulMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-modal-message']", ios: "" }
   };
 
   async productLabelEle(): Promise<Element<"async">> {
@@ -110,7 +111,19 @@ export class HomeScreen extends BaseScreen {
     }
   }
 
+  async regSuccessMsg(): Promise<Element<'async'>> {
+    await this.waitForDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerationSuccessfulMsg)))
+    return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerationSuccessfulMsg));
+  }
+
   async tapOnProfileIcon() {
     await this.click(await this.profileIcon());
+  }
+  async isUserOnHomeScreen() {
+    return await this.isDisplayed(await this.welcomeMsgEle());
+  }
+
+  async isRegSuccessMsgDisplayed() {
+    return this.isDisplayed(await this.regSuccessMsg());
   }
 }
