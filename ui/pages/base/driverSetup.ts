@@ -100,4 +100,8 @@ export module Driver {
       } else await drivers[index].deleteSession();
     }
   }
+  export async function closeDriver(driver: Browser<'async'>) {
+    await driver.closeApp();
+    await driver.deleteSession();
+  }
 }

@@ -33,10 +33,11 @@ export { LoginScreen } from './ui/screens/common/loginScreen';
 export {HomeScreen} from './ui/screens/common/homeScreen'
 export { ExploreScreen } from './ui/screens/common/exploreScreen';export { OtpScreen } from './ui/screens/common/otpScreen';
 export { CartScreen } from './ui/screens/common/cartScreen';
-
+export { ProductScreen } from './ui/screens/common/productScreen';
 // mobile user actions
 export { LoginActions } from './ui/screens/userActions/loginActions';
 export { OtpActions } from './ui/screens/userActions/otpActions'
 export { HomeScreenActions } from './ui/screens/userActions/homeActions'
 export { ExploreScreenActions } from './ui/screens/userActions/exploreScreenActions';
 export { CartActions } from './ui/screens/userActions/cartActions';
+export { ProductScreenActions } from './ui/screens/userActions/productScreenActions';
