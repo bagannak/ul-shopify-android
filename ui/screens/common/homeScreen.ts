@@ -70,4 +70,11 @@ export class HomeScreen extends BaseScreen {
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver,this.selectors.welcomeMsg)),50000)
     return await this.getElement(XpathUtil.getXpath(this.driver,this.selectors.welcomeMsg))
   }
+  async profileIcon(): Promise<Element<'async'>> {
+    return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon));
+  }
+
+  async tapOnProfileIcon() {
+    await this.click(await this.profileIcon());
+  }
 }
