@@ -28,6 +28,8 @@ export { SwipeUtil } from './ui/screens/utils/swipeUtil';
 
 // mobile common screens
 export { LoginScreen } from './ui/screens/common/loginScreen';
+export { CartScreen } from './ui/screens/common/cartScreen';
 
 // mobile user actions
 export { LoginActions } from './ui/screens/userActions/loginActions';
+export { CartActions } from "./ui/screens/userActions/cartActions";
