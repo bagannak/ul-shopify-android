@@ -69,7 +69,7 @@ describe(specName, () => {
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
   })
 
-  it.skip('Verify navigation to "Toys" category', async ()=>{
+  it('Verify navigation to "Toys" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('toys'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
@@ -77,13 +77,13 @@ describe(specName, () => {
 
 
 
-  it.skip('Verify navigation to "Audio sets" category', async ()=>{
+  it('Verify navigation to "Audio sets" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('audio sets'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
   })
 
-  it.skip('Verify navigation to "Books" category', async ()=>{
+  it('Verify navigation to "Books" category', async ()=>{
     await baseScreen.click(await homeScreen.productCategoryEle('books'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
