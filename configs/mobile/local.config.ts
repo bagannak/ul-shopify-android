@@ -28,7 +28,7 @@ export const LocalConfig = {
   ],
   capabilities: {
     platformName: 'Android',
-    'appium:deviceName': 'Pixel 6',
+    'appium:deviceName': 'PriyanshuPhone',
     'appium:app': apkFilePath,
     'appium:automationName': 'UiAutomator2',
     // 'appium:appPackage': 'com.swaglabsmobileapp',

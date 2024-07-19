@@ -1,5 +1,5 @@
-import { BaseScreen } from "../base/baseScreen";
+import { BaseScreen } from '../base/baseScreen';
 
-export class ProfileScreen extends BaseScreen{
-    
+export class ProfileScreen extends BaseScreen {
+
 }

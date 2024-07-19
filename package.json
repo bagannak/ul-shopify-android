@@ -63,7 +63,7 @@
     "@slack/webhook": "^6.0.0",
     "async-mutex": "^0.3.2",
     "browserstack-local": "^1.4.5",
-    "chai": "^4.3.4",
+    "chai": "^4.4.1",
     "dateformat": "^4.5.1",
     "fs": "^0.0.1-security",
     "jest-allure": "^0.1.3",
