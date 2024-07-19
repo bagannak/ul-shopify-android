@@ -85,7 +85,6 @@ export class CartScreen extends BaseScreen {
   }
 
   async emptyCartMessageEle(): Promise<Element<"async">> {
-    return await 
-    this.getElement(this.selectors.emptyCartMessage.android);
+    return await this.getElement(this.selectors.emptyCartMessage.android);
   }
 }

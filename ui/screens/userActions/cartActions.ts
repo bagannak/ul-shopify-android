@@ -1,27 +1,24 @@
 import { Browser } from 'webdriverio';
-import { BaseScreen, CartScreen } from '../../../uiExport';
+import { BaseScreen, CartScreen, ExploreScreen } from "../../../uiExport";
 import { HomeScreen } from '../common/homeScreen';
 
 export class CartActions extends BaseScreen {
   cartScreen: CartScreen;
-
   homeScreen: HomeScreen;
+  exploreScreen: ExploreScreen;
 
   constructor(driver: Browser<'async'>) {
     super(driver);
     this.cartScreen = new CartScreen(driver);
     this.homeScreen = new HomeScreen(driver);
+    this.exploreScreen = new ExploreScreen(driver);
   }
 
   async clickOnProduct() {
-    const productCategoryEle = await this.cartScreen.productCategoryEle();
-    await this.waitForDisplayed(productCategoryEle);
-
-    await this.click(productCategoryEle);
-
-    const productsEle = await this.cartScreen.productEle();
-    await this.waitForDisplayed(productsEle[0]);
-    await this.click(productsEle[0]);
+    // const productsEle = await this.cartScreen.productEle();
+    // await this.waitForDisplayed(productsEle[0]);
+    const product = await this.exploreScreen.productCardEle()
+    await this.click(product);
   }
 
   async clickOnAddToCartButton() {
