@@ -17,6 +17,14 @@ export class HomeScreen extends BaseScreen {
     exploreIconText: { android: "//*[@text='Explore']", ios: "" },
     trackIcon: {android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-track-order']",ios: ""},
     trackIconText: { android: "//*[@text='Track']", ios: "" },
+    productCategory:{
+      clothing:{android:"//*[@text='Clothing']",ios:""},
+      shoes:{android:"//*[@text='Shoes']",ios:""},
+      furniture:{android:"//*[@text='Furniture']",ios:""},
+      toys:{android:"//*[@text='Toys']",ios:""},
+      audioSets:{android:"//*[@text='Audio sets']",ios:""},
+      books:{android:"//*[@text='Books']",ios:""}
+    }
   };
 
   async productLabelEle(): Promise<Element<"async">> {
@@ -68,7 +76,37 @@ export class HomeScreen extends BaseScreen {
 
   async welcomeMsgEle(): Promise<Element<'async'>>{
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver,this.selectors.welcomeMsg)),50000)
-    return await this.getElement(XpathUtil.getXpath(this.driver,this.selectors.welcomeMsg))
+    return  await this.getElement(XpathUtil.getXpath(this.driver,this.selectors.welcomeMsg));
+  }
+
+  async searchBtnEle(): Promise<Element<'async'>>{
+    return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.searchBtn));
+  }
+  async productCategoryEle(category:String): Promise<Element<'async'>>{
+    if(category =="clothing"){
+       await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.clothing)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.clothing))
+    }
+    else if(category =="shoes"){
+      await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.clothing)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.shoes))
+    }
+    else if(category =="furniture"){
+      await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.furniture)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.furniture))
+    }
+    else if(category =="toys"){
+      await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.toys)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.toys))
+    }
+    else if(category =="audio sets"){
+      await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.audioSets)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.audioSets))
+    }
+    else{
+      await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.books)),50000)
+      return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.books))
+    }
   }
   async profileIcon(): Promise<Element<'async'>> {
     return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon));

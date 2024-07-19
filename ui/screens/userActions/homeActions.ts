@@ -2,7 +2,7 @@ import { Browser } from "webdriverio";
 import { BaseScreen } from "../base/baseScreen";
 import { HomeScreen } from "../common/homeScreen";
 import { Element } from "webdriverio";
-export class HomeActions extends BaseScreen {
+export class HomeScreenActions extends BaseScreen {
   homeScreen: HomeScreen;
   constructor(driver: Browser<"async">) {
     super(driver);
