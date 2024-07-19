@@ -43,6 +43,22 @@ export class CartScreen extends BaseScreen {
         "//*[@resource-id='com.ultralesson.ulshopify:id/txt-empty-cart-message']",
       ios: "",
     },
+
+    incrementButton: {
+      android: '//*[@resource-id="com.ultralesson.ulshopify:id/btn-increment"]',
+      ios: "",
+    },
+
+    decrementButton: {
+      android: '//*[@resource-id="com.ultralesson.ulshopify:id/btn-decrement"]',
+      ios: "",
+    },
+
+    totalAmount: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-basket-total"]',
+      ios: "",
+    },
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -52,7 +68,9 @@ export class CartScreen extends BaseScreen {
   }
 
   async addToCartButtonEle(): Promise<Element<"async">> {
-    return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.addToCartButton));
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.addToCartButton)
+    );
   }
 
   async goToCartButtonEle(): Promise<Element<"async">> {
@@ -86,5 +104,22 @@ export class CartScreen extends BaseScreen {
 
   async emptyCartMessageEle(): Promise<Element<"async">> {
     return await this.getElement(this.selectors.emptyCartMessage.android);
+  }
+
+  async incrementButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.incrementButton.android);
+  }
+
+  async decrementButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.decrementButton.android);
+  }
+
+  async totalAmountEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.totalAmount.android);
+  }
+
+  async getTotalAmount(): Promise<string> {
+    const totalAmountEle = await this.totalAmountEle();
+    return this.getText(totalAmountEle); 
   }
 }
