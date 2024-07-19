@@ -5,12 +5,12 @@ export class ProfileScreen extends BaseScreen {
 
     private selectors = {
         profileScreenHearder: { android: "#com.ultralesson.ulshopify:id/txt-welcome-to-ulshopify", ios: "" },
-        registerButton: { android: "#com.ultralesson.ulshopify:id/btn-register", ios: "" },
+        registerButton: { android: "//*[@text='Register']", ios: "" },
         loginButton: { android: "//*[@text='Login']", ios: "" },
     };
 
     async registerButton(): Promise<Element<'async'>> {
-        return this.getElement(this.selectors.registerButton.android);
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerButton));
     }
 
     async loginButton(): Promise<Element<'async'>> {
