@@ -38,7 +38,8 @@ export class HomeScreen extends BaseScreen {
     );
   }
   async profileIcon(): Promise<Element<"async">> {
-    return this.getElement(this.selectors.profileIcon.android);
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon)), 50000)
+    return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon));
   }
 
   async trackIconTextEle(): Promise<Element<"async">> {
@@ -107,9 +108,6 @@ export class HomeScreen extends BaseScreen {
       await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.books)),50000)
       return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategory.books))
     }
-  }
-  async profileIcon(): Promise<Element<'async'>> {
-    return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon));
   }
 
   async tapOnProfileIcon() {

@@ -8,7 +8,8 @@ import { Driver, LoginActions } from '../../../../uiExport';
 import { HomeScreen } from '../../../screens/common/homeScreen';
 import { ProfileScreen } from '../../../screens/common/profileScreen';
 import { RegisterActions } from '../../../screens/userActions/registerActions';
-
+import { RegisterScreen } from '../../../screens/common/registerScreen';
+import { expect } from 'chai';
 
 /**
 * Home Page Validation
@@ -18,6 +19,7 @@ let loginActions: LoginActions;
 let homeScreen: HomeScreen;
 let profileScreen: ProfileScreen;
 let registerActions: RegisterActions;
+let registerScreen: RegisterScreen;
 
 
 declare let reporter: any;
@@ -29,6 +31,7 @@ describe(specName, () => {
         homeScreen = new HomeScreen(driver);
         profileScreen = new ProfileScreen(driver);
         registerActions = new RegisterActions(driver);
+        registerScreen = new RegisterScreen(driver);
     });
 
 
@@ -41,14 +44,16 @@ describe(specName, () => {
         await Driver.closeDrivers([driver]);
     });
 
-
-
-
-    it('verify login', async () => {
+    it("verify the input fields are present in register user screen", async () => {
         await homeScreen.tapOnProfileIcon();
         await profileScreen.tapOnRegisterButton();
-        // await registerActions.registerUser({ fullname: "abc", email: "abc@gmail.com", password: "12345", confirmPassword: "12345", mobileNum: "9876543210" });
-    });
+        expect(await registerScreen.isFullNameInputFieldIsPresent()).to.be.true;
+        expect(await registerScreen.isEmailInputFieldPresent()).to.be.true;
+        expect(await registerScreen.isPasswordInputFieldPresent()).to.be.true;
+        expect(await registerScreen.isConfirmPasswordInputFieldPresent()).to.be.true;
+        expect(await registerScreen.isMobileNumInputFieldPresent()).to.be.true;
+    })
+
 });
 
 

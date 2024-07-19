@@ -4,17 +4,22 @@ import { BaseScreen, XpathUtil } from '../../../uiExport';
 export class ProfileScreen extends BaseScreen {
 
     private selectors = {
-        profileScreenHearder: { android: "#com.ultralesson.ulshopify:id/txt-welcome-to-ulshopify", ios: "" },
+        profileScreenHearder: { android: "//*[@text='Welcome to UI-Shopify'", ios: "" },
         registerButton: { android: "//*[@text='Register']", ios: "" },
         loginButton: { android: "//*[@text='Login']", ios: "" },
     };
 
     async registerButton(): Promise<Element<'async'>> {
+        await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerButton)), 3000);
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerButton));
     }
 
     async loginButton(): Promise<Element<'async'>> {
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginButton));
+    }
+
+    async header(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileScreenHearder));
     }
 
     async tapOnRegisterButton() {
@@ -26,7 +31,16 @@ export class ProfileScreen extends BaseScreen {
     }
 
     async isUserOnProfileScreen() {
-        return await this.getText(this.selectors.profileScreenHearder.android);
+        return await this.isDisplayed(await this.loginButton());
+    }
+
+    async isLoginButtonPresent() {
+        return await this.isDisplayed(await this.loginButton());
+    }
+
+    async isRegisterButtonPresent() {
+        return await this.isDisplayed(await this.registerButton());
+
     }
 
 

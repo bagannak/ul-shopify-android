@@ -35,6 +35,29 @@ export class RegisterScreen extends BaseScreen {
     }
 
 
+    async isFullNameInputFieldIsPresent() {
+        return this.isDisplayed(await this.fullNameInputEle());
+    }
+
+    async isEmailInputFieldPresent() {
+        return this.isDisplayed(await this.emailInputEle());
+    }
+
+    async isPasswordInputFieldPresent() {
+        return this.isDisplayed(await this.passwordInputEle());
+    }
+
+
+    async isConfirmPasswordInputFieldPresent() {
+        return this.isDisplayed(await this.confirmPasswordInputEle());
+    }
+
+
+    async isMobileNumInputFieldPresent() {
+        return this.isDisplayed(await this.mobileNumberInputEle());
+    }
+
+
 
     async enterFullName(fullName: string) {
         await this.setValue(await this.fullNameInputEle(), fullName);
@@ -64,6 +87,7 @@ export class RegisterScreen extends BaseScreen {
         await this.enterMobileNumber('1234567890');
         await this.tapRegisterButton();
     }
+    
 
 
 }
