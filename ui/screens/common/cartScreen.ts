@@ -71,6 +71,18 @@ export class CartScreen extends BaseScreen {
         '//*[@resource-id="com.ultralesson.ulshopify:id/txt-continue-shopping"]',
       ios: "",
     },
+
+    placeOrderButton: {
+      android:
+        "//*[@resource-id='com.ultralesson.ulshopify:id/btn-place-order']",
+      ios: "",
+    },
+
+    orderPlacedSuccessMsg: {
+      android:
+        "//*[@resource-id='com.ultralesson.ulshopify:id/txt-thanks-shopping']",
+      ios: "",
+    },
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -146,5 +158,19 @@ export class CartScreen extends BaseScreen {
 
   async continueShoppingButtonEle(): Promise<Element<"async">> {
     return await this.getElement(this.selectors.continueShoppingButton.android);
+  }
+
+  async placeOrderButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.placeOrderButton.android);
+  }
+
+  async orderPlacedSuccessMsgEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.orderPlacedSuccessMsg.android);
+  }
+
+  async getorderPlacedSuccessMsgText(): Promise<string> {
+    const quantityCountEle = await this.orderPlacedSuccessMsgEle();
+    await this.waitForDisplayed(quantityCountEle);
+    return await this.getText(quantityCountEle);
   }
 }

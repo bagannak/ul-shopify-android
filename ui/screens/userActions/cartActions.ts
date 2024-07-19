@@ -52,8 +52,16 @@ export class CartActions extends BaseScreen {
   }
 
   async clickOnContinueShoppingButton() {
-    const continueShoppingButtonEle = await this.cartScreen.continueShoppingButtonEle();
+    const continueShoppingButtonEle =
+      await this.cartScreen.continueShoppingButtonEle();
     await this.waitForDisplayed(continueShoppingButtonEle);
     await this.click(continueShoppingButtonEle);
+  }
+
+  async clickOnPlaceOrderButton() {
+    const placeOrderButtonEle =
+      await this.cartScreen.placeOrderButtonEle();
+    await this.waitForDisplayed(placeOrderButtonEle);
+    await this.click(placeOrderButtonEle);
   }
 }

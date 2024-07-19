@@ -72,4 +72,25 @@ describe(specName, () => {
     expect(await cartScreen.getTotalAmount()).to.be.equal("₹ 249.99");
   });
 
+  it("Verify that the cart is empty after removing items", async()=>{
+    await cartActions.deleteProductInCart();
+    expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle()))
+      .to.be.true;
+    await cartActions.clickOnContinueShoppingButton();
+  });
+
+  it('Verify that when the user clicks on "Place Order" button, the success message should be displayed', async()=>{
+    await homeScreenActions.navigateTo(
+      await homeScreen.productCategoryEle("clothing")
+    );
+    await cartActions.clickOnProduct();
+    await cartActions.clickOnAddToCartButton();
+    await cartActions.clickOnGoToCart();
+    await cartActions.clickOnPlaceOrderButton();
+
+    expect(await cartScreen.getorderPlacedSuccessMsgText()).to.be.equal(
+      "Thanks for Shopping in UL-Shopify"
+    );
+  });
+
 });
