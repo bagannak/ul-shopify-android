@@ -3,7 +3,8 @@
  */
 
 import { Browser } from 'webdriverio';
-import { BaseScreen, Driver, HomeScreenActions,HomeScreen, ExploreScreen,ExploreScreenActions, ProductScreen, ProductScreenActions } from '../../../../uiExport';
+import { BaseScreen, Driver, HomeScreenActions,HomeScreen, ExploreScreen,ExploreScreenActions, 
+  ProductScreen, ProductScreenActions, CartScreen, CartActions, ProfileScreen, ProfileActions } from '../../../../uiExport';
 
 import { expect } from 'chai';
 
@@ -18,7 +19,12 @@ let exploreScreen: ExploreScreen;
 let exploreScreenActions:ExploreScreenActions;
 let productScreen: ProductScreen;
 let productScreenActions: ProductScreenActions;
+let cartScreen: CartScreen;
+let cartActions: CartActions;
+let profileScreen: ProfileScreen;
+let profileActions: ProfileActions;
 declare let reporter: any;
+
 const specName = 'HomeScreen Validation';
 describe(specName, () => {
   beforeAll(async () => {
@@ -30,6 +36,10 @@ describe(specName, () => {
     exploreScreenActions = new ExploreScreenActions(driver);
     productScreen = new ProductScreen(driver);
     productScreenActions = new ProductScreenActions(driver);
+    cartScreen = new CartScreen(driver);
+    cartActions = new CartActions(driver);
+    profileScreen = new ProfileScreen(driver);
+    profileActions = new ProfileActions(driver)
   });
 
   afterEach(async () => {
@@ -113,13 +123,13 @@ describe(specName, () => {
   it('Verify "Discover Fresh Items" text is displayed in "New Arrivals" section', async ()=>{
     expect(await baseScreen.getText(await homeScreen.newArrivalsDescriptionEle())).to.be.equal('Discover Fresh Items');
   });
-  it.only('Verify "Trending Products" section is displayed', async ()=>{
+  it('Verify "Trending Products" section is displayed', async ()=>{
     expect(await baseScreen.isDisplayed(
       await homeScreen.trendingProductsEle()
   )).to.be.true;
   });
 
-  it.only('Verify clicking on an item in "Trending Products" navigates to item details page',async ()=>{
+  it('Verify clicking on an item in "Trending Products" navigates to item details page',async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.itemInTrendingProductsSectionEle());
     expect(await baseScreen.isDisplayed(
       await productScreen.productTitleEle()
@@ -127,7 +137,24 @@ describe(specName, () => {
   await productScreenActions.navigateBack(await productScreen.backBtnEle())
   })
 
-  it.only('Verify "Discover Fresh Items" text is displayed in "New Arrivals" section', async ()=>{
+  it('Verify "Discover Fresh Items" text is displayed in "New Arrivals" section', async ()=>{
     expect(await baseScreen.getText(await homeScreen.trendingProductsDescriptionEle())).to.be.equal('High demand among users');
   });
+
+  it('Verify "Cart" icon navigates to cart page', async ()=>{
+    await homeScreenActions.navigateTo(await homeScreen.cartIconEle());
+    expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle())).to.be.true;
+    await cartActions.continueShopping(await cartScreen.continueShoppingEle());
+  })
+
+  it('Verify "Explore" icon navigates to explore page', async ()=>{
+    await homeScreenActions.navigateTo(await homeScreen.exploreIconEle());
+    expect(await baseScreen.isDisplayed(await exploreScreen.searchInputBoxEle())).to.be.true;
+    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+  })
+  it('Verify "Profile" icon navigates to user profile page', async ()=>{
+    await homeScreenActions.navigateTo(await homeScreen.profileIcon());
+    expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
+    await profileActions.navigateBack(await profileScreen.backBtnEle());
+  })
 });

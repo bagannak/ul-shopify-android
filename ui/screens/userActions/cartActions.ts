@@ -1,4 +1,4 @@
-import { Browser } from 'webdriverio';
+import { Browser, Element } from 'webdriverio';
 import { BaseScreen, CartScreen, ExploreScreen } from "../../../uiExport";
 import { HomeScreen } from '../common/homeScreen';
 
@@ -38,5 +38,8 @@ export class CartActions extends BaseScreen {
     await this.waitForDisplayed(deleteIcon);
     await this.click(deleteIcon);
     await this.waitForDisplayed(await this.cartScreen.deleteIconEle());
+  }
+  async continueShopping(element:Element<'async'>){
+   await this.click(element);
   }
 }

@@ -43,6 +43,9 @@ export class CartScreen extends BaseScreen {
         "//*[@resource-id='com.ultralesson.ulshopify:id/txt-empty-cart-message']",
       ios: "",
     },
+    continueShopping:{ android:
+      "//*[@resource-id='com.ultralesson.ulshopify:id/txt-continue-shopping']",
+    ios: ""}
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -86,5 +89,11 @@ export class CartScreen extends BaseScreen {
 
   async emptyCartMessageEle(): Promise<Element<"async">> {
     return await this.getElement(this.selectors.emptyCartMessage.android);
+  }
+   async continueShoppingEle(): Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.continueShopping)), 50000)
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.continueShopping)
+    );
   }
 }
