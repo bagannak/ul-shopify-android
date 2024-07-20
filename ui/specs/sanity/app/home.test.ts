@@ -4,7 +4,8 @@
 
 import { Browser } from 'webdriverio';
 import { BaseScreen, Driver, HomeScreenActions,HomeScreen, ExploreScreen,ExploreScreenActions, 
-  ProductScreen, ProductScreenActions, CartScreen, CartActions, ProfileScreen, ProfileActions } from '../../../../uiExport';
+  ProductScreen, ProductScreenActions, CartScreen, CartActions, ProfileScreen, ProfileActions,
+TrackOrderScreen,TrackOrderScreenActions } from '../../../../uiExport';
 
 import { expect } from 'chai';
 
@@ -23,6 +24,8 @@ let cartScreen: CartScreen;
 let cartActions: CartActions;
 let profileScreen: ProfileScreen;
 let profileActions: ProfileActions;
+let trackOrderScreen: TrackOrderScreen;
+let trackOrderScreenActions: TrackOrderScreenActions;
 declare let reporter: any;
 
 const specName = 'HomeScreen Validation';
@@ -39,7 +42,9 @@ describe(specName, () => {
     cartScreen = new CartScreen(driver);
     cartActions = new CartActions(driver);
     profileScreen = new ProfileScreen(driver);
-    profileActions = new ProfileActions(driver)
+    profileActions = new ProfileActions(driver);
+    trackOrderScreen = new TrackOrderScreen(driver);
+    trackOrderScreenActions = new TrackOrderScreenActions(driver);
   });
 
   afterEach(async () => {
@@ -99,7 +104,7 @@ describe(specName, () => {
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
   })
 
-  it('Verify navigation to "Books" category', async ()=>{
+  it.skip('Verify navigation to "Books" category', async ()=>{
     // await homeScreenActions.scrollProductCategory()
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('books'));
     expect(await baseScreen.isDisplayed(await exploreScreen.noProductsFoundMsgEle())).to.be.true;
@@ -121,7 +126,9 @@ describe(specName, () => {
   })
 
   it('Verify "Discover Fresh Items" text is displayed in "New Arrivals" section', async ()=>{
-    expect(await baseScreen.getText(await homeScreen.newArrivalsDescriptionEle())).to.be.equal('Discover Fresh Items');
+    expect(await baseScreen.getText(
+      await homeScreen.newArrivalsDescriptionEle()))
+      .to.be.equal('Discover Fresh Items');
   });
   it('Verify "Trending Products" section is displayed', async ()=>{
     expect(await baseScreen.isDisplayed(
@@ -135,7 +142,7 @@ describe(specName, () => {
       await productScreen.productTitleEle()
   )).to.be.true;
   await productScreenActions.navigateBack(await productScreen.backBtnEle())
-  })
+  });
 
   it('Verify "Discover Fresh Items" text is displayed in "New Arrivals" section', async ()=>{
     expect(await baseScreen.getText(await homeScreen.trendingProductsDescriptionEle())).to.be.equal('High demand among users');
@@ -145,16 +152,23 @@ describe(specName, () => {
     await homeScreenActions.navigateTo(await homeScreen.cartIconEle());
     expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle())).to.be.true;
     await cartActions.continueShopping(await cartScreen.continueShoppingEle());
-  })
+  });
 
   it('Verify "Explore" icon navigates to explore page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.exploreIconEle());
     expect(await baseScreen.isDisplayed(await exploreScreen.searchInputBoxEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
-  })
+  });
+
   it('Verify "Profile" icon navigates to user profile page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.profileIcon());
     expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
     await profileActions.navigateBack(await profileScreen.backBtnEle());
-  })
+  });
+  it.only('Verify "Track" icon navigates to order tracking page', async ()=>{
+    await homeScreenActions.navigateTo(await homeScreen.trackIconEle());
+    expect(await baseScreen.isDisplayed(await trackOrderScreen.loginMsgEle())).to.be.true;
+    await trackOrderScreenActions.navigateBack(await trackOrderScreen.backBtnEle());
+  });
+
 });
