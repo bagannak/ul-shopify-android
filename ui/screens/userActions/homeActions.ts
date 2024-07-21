@@ -24,4 +24,6 @@ export class HomeScreenActions extends BaseScreen {
       direction: 'right'
     });
   }
+
+  
 }

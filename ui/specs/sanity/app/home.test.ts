@@ -172,6 +172,7 @@ describe(specName, () => {
   });
 
 
+
   it('Verify user can search for items using the search bar', async () => {
     await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
     await (await homeScreen.searchBtnEle()).setValue('shoe');
@@ -205,6 +206,16 @@ describe(specName, () => {
     expect(await baseScreen.isDisplayed(await homeScreen.cartIconEle())).to.be.true;
     expect(await baseScreen.isDisplayed(await homeScreen.exploreIconEle())).to.be.true;
     expect(await baseScreen.isDisplayed(await homeScreen.trackIconEle())).to.be.true;
+  });
+
+  it('Verify the home page loads within acceptable time frame', async () => {
+    const acceptableLoadTime = 5000; 
+    const startTime = new Date().getTime();
+    await homeScreenActions.navigateTo(await homeScreen.homeIconEle());
+    await baseScreen.waitForElementDisplayed(await homeScreen.homeIconEle(), acceptableLoadTime);
+    const endTime = new Date().getTime();
+    const loadTime = endTime - startTime;
+    expect(loadTime).to.be.below(acceptableLoadTime, `Home page took too long to load: ${loadTime} ms`);
   });
 
 });
