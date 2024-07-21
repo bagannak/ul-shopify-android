@@ -4,8 +4,6 @@ import { profile } from "console";
 
 export class HomeScreen extends BaseScreen {
   private selectors = {
-
-    productLabel: {android: "//*[@text='PRODUCTS']",ios: "//*[@name='inp-fullname']"},
     welcomeMsg:{android:"//*[@text='Welcome Back!!']",ios:""},
     searchBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-search']",ios:""},
     profileIconText: { android: "//*[@text='Profile']", ios: "" },
@@ -51,12 +49,7 @@ export class HomeScreen extends BaseScreen {
     trendingProductsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[2]",ios:""},
    registerationSuccessfulMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-modal-message']", ios: "" }
   };
-
-  async productLabelEle(): Promise<Element<"async">> {
-    return this.getElement(
-      XpathUtil.getXpath(this.driver, this.selectors.productLabel)
-    );
-  }
+  
   async profileIconTextEle(): Promise<Element<"async">> {
     return this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.profileIconText)
