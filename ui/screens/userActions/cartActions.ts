@@ -1,24 +1,42 @@
-import { Browser } from 'webdriverio';
-import { BaseScreen, CartScreen, ExploreScreen } from "../../../uiExport";
-import { HomeScreen } from '../common/homeScreen';
+import { Browser, Element } from "webdriverio";
+import {
+  BaseScreen,
+  CartScreen,
+  ExploreScreen,
+  ExploreScreenActions,
+} from "../../../uiExport";
+import { HomeScreen } from "../common/homeScreen";
 
 export class CartActions extends BaseScreen {
   cartScreen: CartScreen;
   homeScreen: HomeScreen;
   exploreScreen: ExploreScreen;
+  exploreScreenActions: ExploreScreenActions;
 
   constructor(driver: Browser<"async">) {
     super(driver);
     this.cartScreen = new CartScreen(driver);
     this.homeScreen = new HomeScreen(driver);
     this.exploreScreen = new ExploreScreen(driver);
+    this.exploreScreenActions = new ExploreScreenActions(driver);
   }
-
   async clickOnProduct() {
     // const productsEle = await this.cartScreen.productEle();
     // await this.waitForDisplayed(productsEle[0]);
     const product = await this.exploreScreen.productCardEle();
     await this.click(product);
+  }
+
+  async addMultipleProductToCart() {
+    const productEleList = await this.cartScreen.productEle();
+    productEleList.forEach(async (productEle) => {
+      await this.click(productEle);
+      await this.clickOnAddToCartButton();
+      await this.exploreScreenActions.navigateBack(
+        await this.exploreScreen.backBtnEle()
+      );
+    });
+    await this.clickOnGoToCart();
   }
 
   async clickOnAddToCartButton() {
@@ -34,9 +52,8 @@ export class CartActions extends BaseScreen {
   }
 
   async deleteProductInCart() {
-    const deleteIcon = await this.cartScreen.deleteIconEle();
-    await this.waitForDisplayed(deleteIcon);
-    await this.click(deleteIcon);
+    const deleteIcons = await this.cartScreen.deleteIconEle();
+    deleteIcons.forEach(async (deleteIcon) => await this.click(deleteIcon));
   }
 
   async increaseTheItemQuantity() {
@@ -59,9 +76,16 @@ export class CartActions extends BaseScreen {
   }
 
   async clickOnPlaceOrderButton() {
-    const placeOrderButtonEle =
-      await this.cartScreen.placeOrderButtonEle();
+    const placeOrderButtonEle = await this.cartScreen.placeOrderButtonEle();
     await this.waitForDisplayed(placeOrderButtonEle);
     await this.click(placeOrderButtonEle);
+  }
+
+  async clickOnBackButton() {
+    await this.click(await this.cartScreen.backButtonEle());
+  }
+
+  async clickOnProductInCart() {
+    await this.click(await this.cartScreen.productNameInCartEle());
   }
 }

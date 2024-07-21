@@ -83,6 +83,34 @@ export class CartScreen extends BaseScreen {
         "//*[@resource-id='com.ultralesson.ulshopify:id/txt-thanks-shopping']",
       ios: "",
     },
+
+    productNameInCart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-name"]',
+      ios: "",
+    },
+
+    productPriceInCart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-price"]',
+      ios: "",
+    },
+
+    productImageIncart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/img-cart-product-elegant-suite"]',
+      ios: "",
+    },
+
+    productPage: {
+      android: "//*[resource-id='com.ultralesson.ulshopify:id/img-product']",
+      ios: "",
+    },
+
+    backButton: {
+      android: "//*[resource-id='com.ultralesson.ulshopify:id/btn-back']",
+      ios: "",
+    },
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -120,8 +148,8 @@ export class CartScreen extends BaseScreen {
     return await this.getText(productsIncart[0]);
   }
 
-  async deleteIconEle(): Promise<Element<"async">> {
-    return await this.getElement(
+  async deleteIconEle(): Promise<Element<"async">[]> {
+    return await this.getElements(
       XpathUtil.getXpath(this.driver, this.selectors.deleteIcon)
     );
   }
@@ -172,5 +200,25 @@ export class CartScreen extends BaseScreen {
     const quantityCountEle = await this.orderPlacedSuccessMsgEle();
     await this.waitForDisplayed(quantityCountEle);
     return await this.getText(quantityCountEle);
+  }
+
+  async productNameInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productNameInCart.android);
+  }
+
+  async productPriceInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productPriceInCart.android);
+  }
+
+  async productImageInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productImageIncart.android);
+  }
+
+  async productPageEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productPage.android);
+  }
+
+  async backButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.backButton.android);
   }
 }
