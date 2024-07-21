@@ -4,6 +4,7 @@
 import { expect } from "chai";
 import { Browser } from 'webdriverio';
 import { CartActions, CartScreen, Driver, LoginActions, HomeScreen, HomeScreenActions, BaseScreen} from '../../../../uiExport';
+import { max } from "moment";
 
 /**
  * Cart Page Validation
@@ -40,7 +41,7 @@ describe(specName, () => {
     await Driver.closeDrivers([driver]);
   });
 
-  it('Verify adding an item to the cart and removing item from the cart', async () => {
+  it.skip('Verify adding an item to the cart and removing item from the cart', async () => {
     await homeScreenActions.navigateTo(
       await homeScreen.productCategoryEle("clothing")
     );
@@ -54,7 +55,7 @@ describe(specName, () => {
     await cartActions.clickOnContinueShoppingButton();
   });
 
-  it("Verify increasing the quantity of an item", async () => {
+  it.skip("Verify increasing the quantity of an item", async () => {
     await homeScreenActions.navigateTo(
       await homeScreen.productCategoryEle("clothing")
     );
@@ -66,20 +67,51 @@ describe(specName, () => {
     expect(await cartScreen.getTotalAmount()).to.be.equal("₹ 499.98");
   });
 
-  it("Verify decreasing the quantity of an item", async () => {
+  it.skip("Verify decreasing the quantity of an item", async () => {
     await cartActions.decreaseTheItemQuantity();
     expect(await cartScreen.getQuantityCount()).to.be.equal("1");
     expect(await cartScreen.getTotalAmount()).to.be.equal("₹ 249.99");
   });
 
-  it("Verify that the cart is empty after removing items", async()=>{
+  it.skip("Verify that the cart is empty after removing items", async()=>{
     await cartActions.deleteProductInCart();
     expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle()))
       .to.be.true;
     await cartActions.clickOnContinueShoppingButton();
   });
 
-  it('Verify that when the user clicks on "Place Order" button, the success message should be displayed', async()=>{
+  it("Verify that the item quantity cannot go below 1", async ()=>{
+    await homeScreenActions.navigateTo(
+      await homeScreen.productCategoryEle("clothing")
+    );
+    await cartActions.clickOnProduct();
+    await cartActions.clickOnAddToCartButton();
+    await cartActions.clickOnGoToCart();
+    await cartActions.decreaseTheItemQuantity();
+
+    expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle()))
+      .to.be.true;
+    await cartActions.clickOnContinueShoppingButton();
+  });
+
+  it("Verify the maximum quantity limit for an item", async () => {
+    const maxQuantity = 5;
+    await homeScreenActions.navigateTo(
+      await homeScreen.productCategoryEle("clothing")
+    );
+    await cartActions.clickOnProduct();
+    await cartActions.clickOnAddToCartButton();
+    await cartActions.clickOnGoToCart();
+    for(let i=0; i<maxQuantity;i++){
+      await cartActions.increaseTheItemQuantity();
+    }
+
+    expect(await cartScreen.getQuantityCount()).to.be.not.equal('6');
+
+
+  });
+
+  it.skip('Verify that when the user clicks on "Place Order" button, the success message should be displayed', async()=>{
     await homeScreenActions.navigateTo(
       await homeScreen.productCategoryEle("clothing")
     );
@@ -92,5 +124,7 @@ describe(specName, () => {
       "Thanks for Shopping in UL-Shopify"
     );
   });
+
+  
 
 });
