@@ -28,6 +28,7 @@ export class ProfileScreen extends BaseScreen {
           XpathUtil.getXpath(this.driver, this.selectors.backBtn)
         );
       }
+
     async tapOnRegisterButton() {
         await this.click(await this.registerButton());
     }

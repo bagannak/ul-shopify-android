@@ -4,15 +4,10 @@ import { profile } from "console";
 
 export class HomeScreen extends BaseScreen {
   private selectors = {
-    productLabel: {
-      android: "//*[@text='PRODUCTS']",
-      ios: "//*[@name='inp-fullname']",
-    },
-    welcomeMsg: { android: "//*[@text='Welcome Back!!']", ios: "" },
-    searchBtn: {
-      android: "//*[@resource-id='com.ultralesson.ulshopify:id/btn-search']",
-      ios: "",
-    },
+
+    productLabel: {android: "//*[@text='PRODUCTS']",ios: "//*[@name='inp-fullname']"},
+    welcomeMsg:{android:"//*[@text='Welcome Back!!']",ios:""},
+    searchBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-search']",ios:""},
     profileIconText: { android: "//*[@text='Profile']", ios: "" },
     profileIcon: {
       android: "//*[@resource-id='com.ultralesson.ulshopify:id/icon-profile']",
@@ -54,6 +49,7 @@ export class HomeScreen extends BaseScreen {
     trendingProducts:{android:"(//*[@class='android.widget.HorizontalScrollView'])[3]",ios:""},
     itemInTrendingProductsSection:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[3]",ios:""},
     trendingProductsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[2]",ios:""},
+   registerationSuccessfulMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-modal-message']", ios: "" }
   };
 
   async productLabelEle(): Promise<Element<"async">> {
@@ -67,7 +63,8 @@ export class HomeScreen extends BaseScreen {
     );
   }
   async profileIcon(): Promise<Element<"async">> {
-    return this.getElement(this.selectors.profileIcon.android);
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon)), 50000)
+    return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileIcon));
   }
 
   async trackIconTextEle(): Promise<Element<"async">> {
@@ -208,6 +205,11 @@ export class HomeScreen extends BaseScreen {
     );
   }
 
+  async regSuccessMsg(): Promise<Element<'async'>> {
+    await this.waitForDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerationSuccessfulMsg)))
+    return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.registerationSuccessfulMsg));
+  }
+
   async newArrivalsEle(): Promise<Element<"async">> {
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivals)), 50000)
     return this.getElement(
@@ -244,5 +246,12 @@ export class HomeScreen extends BaseScreen {
     return await this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.trendingProductsDescription)
     );
+  }
+  async isUserOnHomeScreen() {
+    return await this.isDisplayed(await this.welcomeMsgEle());
+  }
+
+  async isRegSuccessMsgDisplayed() {
+    return this.isDisplayed(await this.regSuccessMsg());
   }
 }
