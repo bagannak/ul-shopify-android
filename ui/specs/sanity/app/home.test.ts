@@ -189,5 +189,14 @@ describe(specName, () => {
     expect(productTitleText.toLowerCase()).to.include('sneaker');
   });
 
+  it('Verify no results message is displayed for an invalid search term', async () => {
+    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
+    const invalidSearchTerm = 'invalidsearchterm';
+    await (await homeScreen.searchBtnEle()).setValue(invalidSearchTerm);
+    await driver.keys('Enter');
+    const noResultMessage = await productScreen.noResultMessg();
+    expect(await baseScreen.isDisplayed(noResultMessage)).to.be.true;
+    expect(await noResultMessage.getText()).to.equal('No products found.');
+  });
 
 });

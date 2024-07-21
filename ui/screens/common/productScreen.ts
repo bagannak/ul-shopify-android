@@ -3,7 +3,8 @@ import { BaseScreen, XpathUtil } from "../../../uiExport";
 export class ProductScreen extends BaseScreen{
     private selectors = {
         productTitle:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/txt-product-name']",ios:""},
-        backBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-back']",ios:""}
+        backBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-back']",ios:""},
+        noResultMessg:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/txt-no-products-found']",ios:""}
     }
 
     async productTitleEle(): Promise<Element<"async">> {
@@ -18,6 +19,11 @@ export class ProductScreen extends BaseScreen{
       async backBtnEle(): Promise<Element<"async">> {
         return this.getElement(
           XpathUtil.getXpath(this.driver, this.selectors.backBtn)
+        );
+      }
+      async noResultMessg(): Promise<Element<"async">> {
+        return this.getElement(
+          XpathUtil.getXpath(this.driver, this.selectors.noResultMessg)
         );
       }
 }
