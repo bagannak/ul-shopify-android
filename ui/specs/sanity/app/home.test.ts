@@ -171,4 +171,23 @@ describe(specName, () => {
     await trackOrderScreenActions.navigateBack(await trackOrderScreen.backBtnEle());
   });
 
+
+  it('Verify user can search for items using the search bar', async () => {
+    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
+    await (await homeScreen.searchBtnEle()).setValue('shoe');
+    await driver.keys('Enter');
+    const searchResults = await productScreen.productTitleEle();
+    expect(searchResults).to.be.greaterThan(0);
+  });
+
+  it('Verify search results are relevant to the search term', async () => {
+    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
+    await (await homeScreen.searchBtnEle()).setValue('sneaker');
+    await driver.keys('Enter');
+    const productTitles = await productScreen.productTitleEle(); 
+    const productTitleText = await productTitles.getText();
+    expect(productTitleText.toLowerCase()).to.include('sneaker');
+  });
+
+
 });
