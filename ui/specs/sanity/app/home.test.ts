@@ -199,4 +199,12 @@ describe(specName, () => {
     expect(await noResultMessage.getText()).to.equal('No products found.');
   });
 
+  it('Verify homepage icons are displayed', async () => {
+    expect(await baseScreen.isDisplayed(await homeScreen.profileIcon())).to.be.true;
+    expect(await baseScreen.isDisplayed(await homeScreen.homeIconEle())).to.be.true;
+    expect(await baseScreen.isDisplayed(await homeScreen.cartIconEle())).to.be.true;
+    expect(await baseScreen.isDisplayed(await homeScreen.exploreIconEle())).to.be.true;
+    expect(await baseScreen.isDisplayed(await homeScreen.trackIconEle())).to.be.true;
+  });
+
 });
