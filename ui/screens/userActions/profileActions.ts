@@ -13,6 +13,9 @@ export class ProfileActions extends BaseScreen {
   async navigateTo(element: Element<"async">) {
     await this.click(element);
   }
+  async navigateBack(element: Element<"async">) {
+    await this.click(element);
+  }
 
   async tapOnRegisterButton() {
     await this.click(await this.profileScreen.registerButton());

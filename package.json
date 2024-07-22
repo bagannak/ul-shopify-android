@@ -11,7 +11,7 @@
     "generate-report": "allure generate --clean allure-results",
     "generate-report-open": "allure generate --clean allure-results && allure open",
     "eslint-fix": "npx eslint . --ext .ts --fix",
-    "test-local": "jest ui/specs/sanity/app/*.test.ts --maxWorkers=2 --forceExit",
+    "test-local": "jest ui/specs/sanity/app/home.test.ts --maxWorkers=2 --forceExit",
     "test-demo": "jest ui/specs/sanity/app/demo.test.ts",
     "test-api": "jest webservices/specs/**/**/**/*.test.ts --group=$Group --maxWorkers=5 --forceExit",
     "test-ui": "jest ui/specs/**/web/*.test.ts --group=$Group --maxWorkers=5 --forceExit",
