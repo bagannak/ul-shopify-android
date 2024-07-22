@@ -177,7 +177,7 @@ describe(specName, () => {
     const invalidSearchTerm = 'invalidsearchterm';
     await (await homeScreen.searchBtnEle()).setValue(invalidSearchTerm);
     await driver.keys('Enter');
-    const noResultMessage = await productScreen.noResultMessg();
+    const noResultMessage = await productScreen.noResultMessage();
     expect(await baseScreen.isDisplayed(noResultMessage)).to.be.true;
     expect(await noResultMessage.getText()).to.equal('No products found.');
   });
