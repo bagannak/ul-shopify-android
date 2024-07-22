@@ -47,6 +47,13 @@ export class HomeScreen extends BaseScreen {
       audioSets: { android: "//*[@text='Audio sets']", ios: "" },
       books: { android: "//*[@text='Books']", ios: "" },
     },
+    productCategoryScroll:{android:"(//*[@class='android.widget.HorizontalScrollView'])[1]",ios:''},
+    newArrivals:{android:"(//*[@class='android.widget.HorizontalScrollView'])[2]",ios:""},
+    itemInNewArrivalSection:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[1]",ios:""},
+    newArrivalsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[1]",ios:""},
+    trendingProducts:{android:"(//*[@class='android.widget.HorizontalScrollView'])[3]",ios:""},
+    itemInTrendingProductsSection:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[3]",ios:""},
+    trendingProductsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[2]",ios:""},
   };
 
   async productLabelEle(): Promise<Element<"async">> {
@@ -193,5 +200,49 @@ export class HomeScreen extends BaseScreen {
         XpathUtil.getXpath(this.driver, this.selectors.productCategory.books)
       );
     }
+  }
+  async productCategoryScrollEle():Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategoryScroll)), 50000)
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.productCategoryScroll)
+    );
+  }
+
+  async newArrivalsEle(): Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivals)), 50000)
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.newArrivals)
+    );
+  }
+  async itemInNewArrivalsSectionEle(): Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.itemInNewArrivalSection)), 50000)
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.itemInNewArrivalSection)
+    );
+  }
+  async newArrivalsDescriptionEle():Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)), 50000)
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)
+    );
+  }
+
+  async trendingProductsEle(): Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.trendingProducts)), 50000)
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.trendingProducts)
+    );
+  }
+  async itemInTrendingProductsSectionEle(): Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.itemInTrendingProductsSection)), 50000)
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.itemInTrendingProductsSection)
+    );
+  }
+  async trendingProductsDescriptionEle():Promise<Element<"async">> {
+    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)), 50000)
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.trendingProductsDescription)
+    );
   }
 }

@@ -88,4 +88,7 @@ export class CartActions extends BaseScreen {
   async clickOnProductInCart() {
     await this.click(await this.cartScreen.productNameInCartEle());
   }
+  async continueShopping(element:Element<'async'>){
+   await this.click(element);
+  }
 }

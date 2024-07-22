@@ -1,7 +1,7 @@
-import { Browser } from "webdriverio";
+import { Browser,Element } from "webdriverio";
 import { BaseScreen } from "../base/baseScreen";
 import { HomeScreen } from "../common/homeScreen";
-import { Element } from "webdriverio";
+
 export class HomeScreenActions extends BaseScreen {
   homeScreen: HomeScreen;
   constructor(driver: Browser<"async">) {
@@ -10,5 +10,18 @@ export class HomeScreenActions extends BaseScreen {
   }
   async navigateTo(element: Element<"async">) {
     await this.click(element);
+  }
+  async scrollForward() {
+    const selector = 'android=new UiScrollable(new UiSelector().scrollable(true)).setAsHorizontalList().scrollForward()';
+       await this.driver.$(selector);
+  }
+
+  async scrollProductCategory() {
+    // const element = await this.homeScreen.productCategoryScrollEle();
+    await this.driver.execute('mobile: scroll', {
+      strategy:'xpath',
+      selector: "(//*[@class='android.widget.HorizontalScrollView'])[1]",
+      direction: 'right'
+    });
   }
 }
