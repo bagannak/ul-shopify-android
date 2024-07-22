@@ -43,9 +43,74 @@ export class CartScreen extends BaseScreen {
         "//*[@resource-id='com.ultralesson.ulshopify:id/txt-empty-cart-message']",
       ios: "",
     },
-    continueShopping:{ android:
-      "//*[@resource-id='com.ultralesson.ulshopify:id/txt-continue-shopping']",
-    ios: ""}
+
+    incrementButton: {
+      android: '//*[@resource-id="com.ultralesson.ulshopify:id/btn-increment"]',
+      ios: "",
+    },
+
+    decrementButton: {
+      android: '//*[@resource-id="com.ultralesson.ulshopify:id/btn-decrement"]',
+      ios: "",
+    },
+
+    totalAmount: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-basket-total"]',
+      ios: "",
+    },
+
+    quantityCount: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-quantity"]',
+      ios: "",
+    },
+
+    continueShoppingButton: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-continue-shopping"]',
+      ios: "",
+    },
+
+    placeOrderButton: {
+      android:
+        "//*[@resource-id='com.ultralesson.ulshopify:id/btn-place-order']",
+      ios: "",
+    },
+
+    orderPlacedSuccessMsg: {
+      android:
+        "//*[@resource-id='com.ultralesson.ulshopify:id/txt-thanks-shopping']",
+      ios: "",
+    },
+
+    productNameInCart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-name"]',
+      ios: "",
+    },
+
+    productPriceInCart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/txt-product-price"]',
+      ios: "",
+    },
+
+    productImageIncart: {
+      android:
+        '//*[@resource-id="com.ultralesson.ulshopify:id/img-cart-product-elegant-suite"]',
+      ios: "",
+    },
+
+    productPage: {
+      android: "//*[resource-id='com.ultralesson.ulshopify:id/img-product']",
+      ios: "",
+    },
+
+    backButton: {
+      android: "//*[resource-id='com.ultralesson.ulshopify:id/btn-back']",
+      ios: "",
+    },
   };
 
   async productCategoryEle(): Promise<Element<"async">> {
@@ -55,7 +120,9 @@ export class CartScreen extends BaseScreen {
   }
 
   async addToCartButtonEle(): Promise<Element<"async">> {
-    return await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.addToCartButton));
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.addToCartButton)
+    );
   }
 
   async goToCartButtonEle(): Promise<Element<"async">> {
@@ -81,8 +148,8 @@ export class CartScreen extends BaseScreen {
     return await this.getText(productsIncart[0]);
   }
 
-  async deleteIconEle(): Promise<Element<"async">> {
-    return await this.getElement(
+  async deleteIconEle(): Promise<Element<"async">[]> {
+    return await this.getElements(
       XpathUtil.getXpath(this.driver, this.selectors.deleteIcon)
     );
   }
@@ -90,10 +157,68 @@ export class CartScreen extends BaseScreen {
   async emptyCartMessageEle(): Promise<Element<"async">> {
     return await this.getElement(this.selectors.emptyCartMessage.android);
   }
-   async continueShoppingEle(): Promise<Element<"async">> {
-    await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.continueShopping)), 50000)
-    return await this.getElement(
-      XpathUtil.getXpath(this.driver, this.selectors.continueShopping)
-    );
+
+  async incrementButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.incrementButton.android);
+  }
+
+  async decrementButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.decrementButton.android);
+  }
+
+  async totalAmountEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.totalAmount.android);
+  }
+
+  async getTotalAmount(): Promise<string> {
+    const totalAmountEle = await this.totalAmountEle();
+    return await this.getText(totalAmountEle);
+  }
+
+  async quantityCountEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.quantityCount.android);
+  }
+
+  async getQuantityCount(): Promise<string> {
+    const quantityCountEle = await this.quantityCountEle();
+    return await this.getText(quantityCountEle);
+  }
+
+  async continueShoppingButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.continueShoppingButton.android);
+  }
+
+  async placeOrderButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.placeOrderButton.android);
+  }
+
+  async orderPlacedSuccessMsgEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.orderPlacedSuccessMsg.android);
+  }
+
+  async getorderPlacedSuccessMsgText(): Promise<string> {
+    const quantityCountEle = await this.orderPlacedSuccessMsgEle();
+    await this.waitForDisplayed(quantityCountEle);
+    return await this.getText(quantityCountEle);
+  }
+
+  async productNameInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productNameInCart.android);
+  }
+
+  async productPriceInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productPriceInCart.android);
+  }
+
+  async productImageInCartEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productImageIncart.android);
+  }
+
+  async productPageEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.productPage.android);
+  }
+
+  async backButtonEle(): Promise<Element<"async">> {
+    return await this.getElement(this.selectors.backButton.android);
   }
 }
