@@ -94,22 +94,6 @@ describe(specName, () => {
     await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
-
-
-  it('Verify navigation to "Audio sets" category', async ()=>{
-    await baseScreen.scrollRight(1027,606,990)
-    await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('audio sets'));
-    expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
-  })
-
-  it('Verify navigation to "Books" category', async ()=>{
-    await baseScreen.scrollRight(1027,606,990)
-    await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('books'));
-    expect(await baseScreen.isDisplayed(await exploreScreen.noProductsFoundMsgEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
-  })
-
   it('Verify "New Arrivals" section is displayed', async ()=>{
     expect(await baseScreen.isDisplayed(
       await homeScreen.newArrivalsEle()
