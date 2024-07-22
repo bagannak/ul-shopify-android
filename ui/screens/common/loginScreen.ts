@@ -10,6 +10,7 @@ export class LoginScreen extends BaseScreen {
       android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-login']",
       ios: "",
     },
+    forgotPassword: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-forgot-password']", ios: "" }
   };
 
   async header(): Promise<Element<'async'>> {
@@ -17,21 +18,27 @@ export class LoginScreen extends BaseScreen {
     return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginScrenHeader));
   }
 
-  async emailTextField(): Promise<Element<"async">> {
+  async emailTextFieldEle(): Promise<Element<"async">> {
     return this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.emailTextField)
     );
   }
 
-  async passwordTextField(): Promise<Element<"async">> {
+  async passwordTextFieldEle(): Promise<Element<"async">> {
     return this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.passwordTextField)
     );
   }
 
-  async loginButton(): Promise<Element<"async">> {
+  async loginButtonEle(): Promise<Element<"async">> {
     return this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.loginButton)
+    );
+  }
+
+  async forgotPasswordEle(): Promise<Element<"async">> {
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.forgotPassword)
     );
   }
 
