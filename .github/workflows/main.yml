@@ -49,8 +49,11 @@ jobs:
     - name: Install system images
       run: sdkmanager "system-images;android-30;google_apis;x86_64"
 
+    - name: List available devices
+      run: avdmanager list device
+
     - name: Create AVD
-      run: echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" -d "Pixel_3"
+      run: echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" -d "pixel"
 
     - name: Configure AVD
       run: |
@@ -75,7 +78,7 @@ jobs:
         api-level: 30
         target: google_apis
         arch: x86_64
-        profile: pixel_3
+        profile: pixel
         emulator-options: -no-window -no-boot-anim -no-audio -gpu swiftshader_indirect
 
     - name: Wait for emulator to boot
