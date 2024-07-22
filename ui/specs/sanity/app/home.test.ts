@@ -133,7 +133,7 @@ describe(specName, () => {
   it('Verify "Cart" icon navigates to cart page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.cartIconEle());
     expect(await baseScreen.isDisplayed(await cartScreen.emptyCartMessageEle())).to.be.true;
-    await cartActions.continueShopping(await cartScreen.continueShoppingEle());
+    await cartActions.continueShopping(await cartScreen.continueShoppingButtonEle());
   });
 
   it('Verify "Explore" icon navigates to explore page', async ()=>{
@@ -144,7 +144,7 @@ describe(specName, () => {
 
   it('Verify "Profile" icon navigates to user profile page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.profileIcon());
-    expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
+    expect(await profileActions.isUserOnProfileScreen()).to.be.true;
     await profileActions.navigateBack(await profileScreen.backBtnEle());
   });
   it('Verify "Track" icon navigates to order tracking page', async ()=>{
