@@ -1,7 +1,6 @@
-import { Browser } from 'webdriverio';
+import { Browser, Element } from 'webdriverio';
 import { BaseScreen, LoginScreen, OtpActions } from '../../../uiExport';
 import { HomeScreen } from '../common/homeScreen';
-import { ProfileScreen } from '../common/profileScreen';
 import { ProfileActions } from './profileActions';
 
 export class LoginActions extends BaseScreen {
@@ -27,13 +26,20 @@ export class LoginActions extends BaseScreen {
   async isUserOnLoginScreen() {
     return await this.isDisplayed(await this.loginScreen.header());
   }
+  async navigateTo(element: Element<"async">) {
+    await this.click(element);
+  }
+
+  async isElementDisplayed(element: Element<"async">): Promise<boolean> {
+    return this.isDisplayed(await element);
+  }
 
   async fillLoginDetails(accountDetails: { email: string; password: string }) {
-    await this.setValue(await this.loginScreen.emailTextField(), accountDetails.email);
+    await this.setValue(await this.loginScreen.emailTextFieldEle(), accountDetails.email);
     await this.setValue(
-      await this.loginScreen.passwordTextField(),
+      await this.loginScreen.passwordTextFieldEle(),
       accountDetails.password
     );
-    await this.click(await this.loginScreen.loginButton());
+    await this.click(await this.loginScreen.loginButtonEle());
   }
 }

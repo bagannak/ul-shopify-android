@@ -13,6 +13,7 @@ export class RegisterScreen extends BaseScreen {
         ulShopifyLink: { android: "//*[@text='Ul-Shopify']", ios: "" },
         passMinLengthMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-password-should-be-minimum-of-5-characters']", ios: "" },
         confirmPassIsNotSameMsg: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-confirm-password-is-not-matched-with-password']", ios: "" },
+        emailNotRegisteredPopUp: { android: "//*[@text='Email is not registered']", ios: "" }
     };
 
 
@@ -52,5 +53,9 @@ export class RegisterScreen extends BaseScreen {
 
     async confirmPassIsNotSameMsgEle(): Promise<Element<'async'>> {
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.confirmPassIsNotSameMsg));
+    }
+
+    async emailNotRegisteredPopUpEle(): Promise<Element<'async'>> {
+        return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.emailNotRegisteredPopUp));
     }
 }

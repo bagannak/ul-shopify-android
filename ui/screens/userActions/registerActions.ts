@@ -1,4 +1,4 @@
-import { Browser } from "webdriverio";
+import { Browser, Element } from "webdriverio";
 import { BaseScreen } from "../base/baseScreen";
 import { ProfileScreen } from "../common/profileScreen";
 import { RegisterScreen } from "../common/registerScreen";
@@ -104,6 +104,9 @@ export class RegisterActions extends BaseScreen {
         await this.enterConfirmPassword(accountDetails.confirmPassword);
         await this.enterMobileNumber(accountDetails.mobileNum);
         await this.tapRegisterButton();
+    }
+    async isElementDisplayed(element: Element<"async">): Promise<boolean> {
+        return this.isDisplayed(await element);
     }
 
 }
