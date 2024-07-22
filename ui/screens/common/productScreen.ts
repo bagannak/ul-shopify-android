@@ -22,7 +22,7 @@ export class ProductScreen extends BaseScreen{
           XpathUtil.getXpath(this.driver, this.selectors.backBtn)
         );
       }
-      async noResultMessg(): Promise<Element<"async">> {
+      async noResultMessage(): Promise<Element<"async">> {
         return this.getElement(
           XpathUtil.getXpath(this.driver, this.selectors.noResultMessg)
         );
