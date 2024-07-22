@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-      - dev
+  workflow_dispatch:
 
 jobs:
   test:
@@ -73,7 +73,7 @@ jobs:
     - name: Start Appium server
       run: |
         npm run webdriver-start
-        appium --base-path /wd/hub &
+        appium --log-level error --base-path /wd/hub &
 
     - name: Start WebDriver server
       run: |
