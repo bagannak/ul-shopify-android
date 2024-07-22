@@ -74,26 +74,25 @@ describe(specName, () => {
   it('Verify navigation to "Clothing" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('clothing'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify navigation to "Shoes" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('shoes'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
   it('Verify navigation to "Furniture" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('furniture'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify navigation to "Toys" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('toys'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
-  
   it('Verify "New Arrivals" section is displayed', async ()=>{
     expect(await baseScreen.isDisplayed(
       await homeScreen.newArrivalsEle()
@@ -148,7 +147,7 @@ describe(specName, () => {
     expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
     await profileActions.navigateBack(await profileScreen.backBtnEle());
   });
-  it.only('Verify "Track" icon navigates to order tracking page', async ()=>{
+  it('Verify "Track" icon navigates to order tracking page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.trackIconEle());
     expect(await baseScreen.isDisplayed(await trackOrderScreen.loginMsgEle())).to.be.true;
     await trackOrderScreenActions.navigateBack(await trackOrderScreen.backBtnEle());
