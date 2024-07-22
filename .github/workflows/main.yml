@@ -46,7 +46,11 @@ jobs:
           emulator
           system-images;android-30;google_apis;x86_64
 
-    - name: Start Android Emulator
+    - name: Create AVD
+      run: |
+        echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;x86_64" -d pixel
+
+    - name: Configure AVD
       run: |
         echo "hw.device.name=Pixel_3" >> ~/.android/avd/test.avd/config.ini
         echo "hw.device.manufacturer=Google" >> ~/.android/avd/test.avd/config.ini
@@ -63,6 +67,8 @@ jobs:
         echo "tag.id=google_apis" >> ~/.android/avd/test.avd/config.ini
         echo "abi.type=x86_64" >> ~/.android/avd/test.avd/config.ini
 
+    - name: Start Android Emulator
+      run: |
         emulator -avd test -no-window -no-boot-anim -no-audio -gpu swiftshader_indirect -accel on &
 
     - name: Wait for emulator to boot
