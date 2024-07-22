@@ -3,8 +3,8 @@
  */
 
 import { Browser } from 'webdriverio';
-import { Driver, LoginActions, HomeScreenActions } from '../../../../uiExport';
-import { HomeScreen } from '../../../screens/common/homeScreen';
+import { Driver, HomeScreenActions, HomeScreen, LoginActions } from '../../../../uiExport';
+
 
 /**
  * Home Page Validation
@@ -36,7 +36,7 @@ describe(specName, () => {
  * pass os in env.properties file
  */
   it('verify login', async () => {
-    await homeScreenActions.navigateTo(await homeScreen.profileIcon())
+   await homeScreenActions.navigateTo(await homeScreen.profileIcon())
     await loginActions.login({
       email: "ulshopify@ultralesson.com",
       password: "12345",

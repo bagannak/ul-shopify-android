@@ -3,18 +3,18 @@
  */
 
 import { Browser } from 'webdriverio';
-import { Driver, LoginActions } from '../../../../uiExport';
+import { Driver, HomeScreenActions, LoginActions } from '../../../../uiExport';
 import { HomeScreen } from '../../../screens/common/homeScreen';
-import { profile } from 'console';
-import { ProfileScreen } from '../../../screens/common/profileScreen';
 import { expect } from 'chai';
+import { ProfileActions } from '../../../screens/userActions/profileActions';
 /**
  * Home Page Validation
  */
 let driver: Browser<'async'>;
 let loginActions: LoginActions;
 let homeScreen: HomeScreen;
-let profileScreen: ProfileScreen;
+let profileActions: ProfileActions
+let homeScreenActions: HomeScreenActions
 
 declare let reporter: any;
 const specName = 'Login app validation';
@@ -22,8 +22,9 @@ describe(specName, () => {
     beforeAll(async () => {
         driver = await Driver.getDriver(specName);
         loginActions = new LoginActions(driver);
+        homeScreenActions = new HomeScreenActions(driver);
         homeScreen = new HomeScreen(driver);
-        profileScreen = new ProfileScreen(driver);
+        profileActions = new ProfileActions(driver);
     });
 
     afterEach(async () => {
@@ -39,14 +40,14 @@ describe(specName, () => {
    * pass os in env.properties file
    */
     it('Verify the Profile Screen loads correctly.', async () => {
-        await homeScreen.tapOnProfileIcon();
-        expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
+        await homeScreenActions.navigateTo(await homeScreen.profileIcon());
+        expect(await profileActions.isUserOnProfileScreen()).to.be.true;
     });
 
     it('Verify that the register and login buttons are on the profile screen', async () => {
-        await homeScreen.tapOnProfileIcon();
-        expect(await profileScreen.isLoginButtonPresent()).to.be.true;
-        expect(await profileScreen.isRegisterButtonPresent()).to.be.true;
+        await homeScreenActions.navigateTo(await homeScreen.profileIcon());
+        expect(await profileActions.isLoginButtonPresent()).to.be.true;
+        expect(await profileActions.isRegisterButtonPresent()).to.be.true;
 
     })
 });

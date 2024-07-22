@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '17'  # Use Java 17 to match the required class file version
+
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        components: |
+          platform-tools
+          build-tools;30.0.3
+          platforms;android-30
+          emulator
+          system-images;android-30;google_apis;x86_64
+
+    - name: Start Android Emulator
+      run: |
+        echo "hw.device.name=Pixel_3" >> ~/.android/avd/test.avd/config.ini
+        echo "hw.device.manufacturer=Google" >> ~/.android/avd/test.avd/config.ini
+        echo "hw.gpu.enabled=yes" >> ~/.android/avd/test.avd/config.ini
+        echo "hw.gpu.mode=auto" >> ~/.android/avd/test.avd/config.ini
+        echo "showDeviceFrame=yes" >> ~/.android/avd/test.avd/config.ini
+        echo "skin.dynamic=yes" >> ~/.android/avd/test.avd/config.ini
+        echo "skin.name=pixel_3" >> ~/.android/avd/test.avd/config.ini
+        echo "skin.path=_no_skin" >> ~/.android/avd/test.avd/config.ini
+        echo "disk.dataPartition.size=2G" >> ~/.android/avd/test.avd/config.ini
+        echo "avd.ini.encoding=UTF-8" >> ~/.android/avd/test.avd/config.ini
+        echo "image.sysdir.1=system-images/android-30/google_apis/x86_64/" >> ~/.android/avd/test.avd/config.ini
+        echo "tag.display=Google APIs" >> ~/.android/avd/test.avd/config.ini
+        echo "tag.id=google_apis" >> ~/.android/avd/test.avd/config.ini
+        echo "abi.type=x86_64" >> ~/.android/avd/test.avd/config.ini
+
+        emulator -avd test -no-window -no-boot-anim -no-audio -gpu swiftshader_indirect -accel on &
+
+    - name: Wait for emulator to boot
+      run: |
+        adb wait-for-device
+        adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+        adb shell 'while [[ -z $(getprop init.svc.bootanim) ]]; do sleep 1; done;'
+        adb shell input keyevent 82
+
+    - name: Start Appium server
+      run: |
+        npm run webdriver-start
+        appium --log-level --base-path /wd/hub error &
+
+    - name: Start WebDriver server
+      run: |
+        npx webdriver-manager update
+        npx webdriver-manager start --detach
+
+    - name: Wait for servers to start
+      run: npx wait-on tcp:4723 tcp:4444
+
+    - name: Run tests
+      run: npm run test-app
+
+    - name: Generate Allure report
+      run: npm run generate-report
+
+    - name: Upload Allure results
+      uses: actions/upload-artifact@v2
+      with:
+        name: allure-results
+        path: allure-results
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: test-results
