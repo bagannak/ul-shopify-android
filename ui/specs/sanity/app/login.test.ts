@@ -47,7 +47,7 @@ describe(specName, () => {
  * it will verify login on both android and ios
  * pass os in env.properties file
  */
-  it('verify login', async () => {
+  it('verify the login user feature with valid user credentials.', async () => {
     await homeScreenActions.navigateTo(await homeScreen.profileIcon())
     await loginActions.login({
       email: "ulshopify@ultralesson.com",
@@ -68,5 +68,5 @@ describe(specName, () => {
     await loginActions.fillLoginDetails(testData.login_user_invalid_credentials);
     expect(await registerActions.isElementDisplayed(await registerScreen.emailNotRegisteredPopUpEle()))
   })
-  
+
 });
