@@ -3,6 +3,7 @@ import { BaseScreen, XpathUtil } from '../../../uiExport';
 
 export class LoginScreen extends BaseScreen {
   private selectors = {
+    loginScrenHeader: { android: "//*[@resource-id='com.ultralesson.ulshopify:id/txt-login-heading']", ios: "" },
     emailTextField: { android: "//*[@text='Enter your email']", ios: "" },
     passwordTextField: { android: "//*[@text='Enter your password']", ios: "" },
     loginButton: {
@@ -10,6 +11,11 @@ export class LoginScreen extends BaseScreen {
       ios: "",
     },
   };
+
+  async header(): Promise<Element<'async'>> {
+    this.waitForDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginScrenHeader)));
+    return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginScrenHeader));
+  }
 
   async emailTextField(): Promise<Element<"async">> {
     return this.getElement(
@@ -29,12 +35,4 @@ export class LoginScreen extends BaseScreen {
     );
   }
 
-  async fillLoginDetails(accountDetails: { email: string; password: string }) {
-    await this.setValue(await this.emailTextField(), accountDetails.email);
-    await this.setValue(
-      await this.passwordTextField(),
-      accountDetails.password
-    );
-    await this.click(await this.loginButton());
-  }
 }
