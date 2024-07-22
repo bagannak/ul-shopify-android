@@ -47,13 +47,14 @@ export class HomeScreen extends BaseScreen {
       audioSets: { android: "//*[@text='Audio sets']", ios: "" },
       books: { android: "//*[@text='Books']", ios: "" },
     },
-    productCategoryScroll:{android:"(//*[@class='android.widget.HorizontalScrollView'])[1]",ios:''},
-    newArrivals:{android:"(//*[@class='android.widget.HorizontalScrollView'])[2]",ios:""},
-    itemInNewArrivalSection:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[1]",ios:""},
-    newArrivalsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[1]",ios:""},
-    trendingProducts:{android:"(//*[@class='android.widget.HorizontalScrollView'])[3]",ios:""},
-    itemInTrendingProductsSection:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[3]",ios:""},
-    trendingProductsDescription:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[2]",ios:""},
+    productCategoryScroll: { android: "(//*[@class='android.widget.HorizontalScrollView'])[1]", ios: '' },
+    newArrivals: { android: "(//*[@class='android.widget.HorizontalScrollView'])[2]", ios: "" },
+    itemInNewArrivalSection: { android: "(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[1]", ios: "" },
+    newArrivalsDescription: { android: "(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[1]", ios: "" },
+    trendingProducts: { android: "(//*[@class='android.widget.HorizontalScrollView'])[3]", ios: "" },
+    itemInTrendingProductsSection: { android: "(//*[@resource-id='com.ultralesson.ulshopify:id/ele-featured-row-card'])[3]", ios: "" },
+    trendingProductsDescription: { android: "(//*[@resource-id='com.ultralesson.ulshopify:id/txt-featured-row-description'])[2]", ios: "" },
+    regSuccessMsg: { android: "//*[@text='Registration is successful Welcome to Ul-Shopify']", ios: "" }
   };
 
   async productLabelEle(): Promise<Element<"async">> {
@@ -202,7 +203,7 @@ export class HomeScreen extends BaseScreen {
       );
     }
   }
-  async productCategoryScrollEle():Promise<Element<"async">> {
+  async productCategoryScrollEle(): Promise<Element<"async">> {
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.productCategoryScroll)), 50000)
     return await this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.productCategoryScroll)
@@ -221,7 +222,7 @@ export class HomeScreen extends BaseScreen {
       XpathUtil.getXpath(this.driver, this.selectors.itemInNewArrivalSection)
     );
   }
-  async newArrivalsDescriptionEle():Promise<Element<"async">> {
+  async newArrivalsDescriptionEle(): Promise<Element<"async">> {
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)), 50000)
     return await this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)
@@ -240,17 +241,15 @@ export class HomeScreen extends BaseScreen {
       XpathUtil.getXpath(this.driver, this.selectors.itemInTrendingProductsSection)
     );
   }
-  async trendingProductsDescriptionEle():Promise<Element<"async">> {
+  async trendingProductsDescriptionEle(): Promise<Element<"async">> {
     await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.newArrivalsDescription)), 50000)
     return await this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.trendingProductsDescription)
     );
   }
-  async isUserOnHomeScreen() {
-    return await this.isDisplayed(await this.welcomeMsgEle());
-  }
-
-  async isRegSuccessMsgDisplayed() {
-    return this.isDisplayed(await this.regSuccessMsg());
+  async regSuccessMsg(): Promise<Element<'async'>> {
+    return await this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.regSuccessMsg)
+    );
   }
 }
