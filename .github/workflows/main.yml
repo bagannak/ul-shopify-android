@@ -116,3 +116,6 @@ jobs:
       with:
         name: test-results
         path: test-results
+
+    - name: Terminate Emulator
+      run: adb -s emulator-5554 emu kill
