@@ -7,7 +7,8 @@ export class ExploreScreen extends BaseScreen {
    productCard:{android:"(//*[@resource-id='com.ultralesson.ulshopify:id/ele-product-card'])[1]",ios:""},
    noProductsFoundMsg:{android:"//*[@text='No products found.']",ios:""},
    searchInputBox:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/inp-search']",ios:""},
-   backBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/icon-back']",ios:""}
+   backBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/btn-back']",ios:""},
+   exploreMoreBackBtn:{android:"//*[@resource-id='com.ultralesson.ulshopify:id/icon-back']",ios:""}
   };
 
   async productCardEle(): Promise<Element<"async">> {
@@ -38,6 +39,11 @@ export class ExploreScreen extends BaseScreen {
   async backBtnEle(): Promise<Element<"async">> {
     return this.getElement(
       XpathUtil.getXpath(this.driver, this.selectors.backBtn)
+    );
+  }
+  async exploreMoreBackBtnEle(): Promise<Element<"async">> {
+    return this.getElement(
+      XpathUtil.getXpath(this.driver, this.selectors.exploreMoreBackBtn)
     );
   }
 }

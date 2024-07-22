@@ -74,24 +74,24 @@ describe(specName, () => {
   it('Verify navigation to "Clothing" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('clothing'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify navigation to "Shoes" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('shoes'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
   it('Verify navigation to "Furniture" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('furniture'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify navigation to "Toys" category', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('toys'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
 
@@ -100,14 +100,14 @@ describe(specName, () => {
     await baseScreen.scrollRight(1027,606,990)
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('audio sets'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify navigation to "Books" category', async ()=>{
     await baseScreen.scrollRight(1027,606,990)
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('books'));
     expect(await baseScreen.isDisplayed(await exploreScreen.noProductsFoundMsgEle())).to.be.true;
-    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
+    await exploreScreenActions.navigateBack(await exploreScreen.exploreMoreBackBtnEle());
   })
 
   it('Verify "New Arrivals" section is displayed', async ()=>{
