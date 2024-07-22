@@ -13,6 +13,7 @@ export class LoginScreen extends BaseScreen {
   };
 
   async header(): Promise<Element<'async'>> {
+    this.waitForDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginScrenHeader)));
     return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.loginScrenHeader));
   }
 
@@ -34,16 +35,4 @@ export class LoginScreen extends BaseScreen {
     );
   }
 
-  async isUserOnLoginScreen() {
-    await this.isDisplayed(await this.header());
-  }
-
-  async fillLoginDetails(accountDetails: { email: string; password: string }) {
-    await this.setValue(await this.emailTextField(), accountDetails.email);
-    await this.setValue(
-      await this.passwordTextField(),
-      accountDetails.password
-    );
-    await this.click(await this.loginButton());
-  }
 }

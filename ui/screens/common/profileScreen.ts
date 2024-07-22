@@ -22,27 +22,4 @@ export class ProfileScreen extends BaseScreen {
         return this.getElement(XpathUtil.getXpath(this.driver, this.selectors.profileScreenHearder));
     }
 
-    async tapOnRegisterButton() {
-        await this.click(await this.registerButton());
-    }
-
-    async tapOnLoginButton() {
-        await this.click(await this.loginButton());
-    }
-
-    async isUserOnProfileScreen() {
-        return await this.isDisplayed(await this.loginButton());
-    }
-
-    async isLoginButtonPresent() {
-        return await this.isDisplayed(await this.loginButton());
-    }
-
-    async isRegisterButtonPresent() {
-        return await this.isDisplayed(await this.registerButton());
-
-    }
-
-
-
 }
