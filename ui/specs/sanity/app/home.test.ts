@@ -96,16 +96,15 @@ describe(specName, () => {
 
 
 
-  it.skip('Verify navigation to "Audio sets" category', async ()=>{
-    // await homeScreenActions.scrollProductCategory()
-    // await homeScreenActions.scrollForward()
+  it('Verify navigation to "Audio sets" category', async ()=>{
+    await baseScreen.scrollRight(1027,606,990)
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('audio sets'));
     expect(await baseScreen.isDisplayed(await exploreScreen.productCardEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
   })
 
-  it.skip('Verify navigation to "Books" category', async ()=>{
-    // await homeScreenActions.scrollProductCategory()
+  it('Verify navigation to "Books" category', async ()=>{
+    await baseScreen.scrollRight(1027,606,990)
     await homeScreenActions.navigateTo(await homeScreen.productCategoryEle('books'));
     expect(await baseScreen.isDisplayed(await exploreScreen.noProductsFoundMsgEle())).to.be.true;
     await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
@@ -165,7 +164,7 @@ describe(specName, () => {
     expect(await profileScreen.isUserOnProfileScreen()).to.be.true;
     await profileActions.navigateBack(await profileScreen.backBtnEle());
   });
-  it.only('Verify "Track" icon navigates to order tracking page', async ()=>{
+  it('Verify "Track" icon navigates to order tracking page', async ()=>{
     await homeScreenActions.navigateTo(await homeScreen.trackIconEle());
     expect(await baseScreen.isDisplayed(await trackOrderScreen.loginMsgEle())).to.be.true;
     await trackOrderScreenActions.navigateBack(await trackOrderScreen.backBtnEle());

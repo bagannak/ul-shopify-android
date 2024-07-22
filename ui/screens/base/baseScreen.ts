@@ -257,4 +257,12 @@ export class BaseScreen {
       else return false;
     }
   }
+  async scrollRight(startX:number,startY:number,endX:number){
+    await this.driver.touchAction([
+      { action: 'press', x: startX, y: startY },
+      { action: 'wait', ms: 1000 },
+      { action: 'moveTo', x: endX - startX, y: 0 },
+      { action: 'release' }
+    ]);
+  }
 }

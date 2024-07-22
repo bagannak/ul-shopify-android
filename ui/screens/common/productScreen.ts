@@ -16,6 +16,7 @@ export class ProductScreen extends BaseScreen{
       }
 
       async backBtnEle(): Promise<Element<"async">> {
+        await this.waitForElementDisplayed(await this.getElement(XpathUtil.getXpath(this.driver, this.selectors.backBtn)), 3000);
         return this.getElement(
           XpathUtil.getXpath(this.driver, this.selectors.backBtn)
         );
