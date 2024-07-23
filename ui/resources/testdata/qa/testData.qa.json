@@ -1,0 +1,34 @@
+{
+    "register_user_valid_data": {
+        "fullname": "abc",
+        "email": "abc@gmail.com",
+        "password": "12345",
+        "confirmPassword": "12345",
+        "mobileNum": "9876543210"
+    },
+    "register_user_invalid_mob_num": {
+        "fullname": "abc",
+        "email": "abc@gmail.com",
+        "password": "12345",
+        "confirmPassword": "12345",
+        "mobileNum": "987654321"
+    },
+    "register_user_invalid_password_length": {
+        "fullname": "abc",
+        "email": "abc@gmail.com",
+        "password": "1234",
+        "confirmPassword": "1234",
+        "mobileNum": "9876543210"
+    },
+    "register_user_confirm_password_mismatch": {
+        "fullname": "abc",
+        "email": "abc@gmail.com",
+        "password": "12345",
+        "confirmPassword": "54321",
+        "mobileNum": "9876543210"
+    },
+    "login_user_invalid_credentials": {
+        "email": "abc@gmail.com",
+        "password": "12345"
+    }
+}

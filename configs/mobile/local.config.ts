@@ -28,7 +28,7 @@ export const LocalConfig = {
   ],
   capabilities: {
     platformName: 'Android',
-    'appium:deviceName': 'Pixel 7',
+    'appium:deviceName': 'Pixel 6',
     'appium:app': apkFilePath,
     'appium:automationName': 'UiAutomator2',
     // 'appium:appPackage': 'com.swaglabsmobileapp',
