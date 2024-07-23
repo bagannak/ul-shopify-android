@@ -24,7 +24,7 @@ let registerScreen: RegisterScreen;
 declare let reporter: any;
 const specName = 'Login app validation';
 describe(specName, () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     driver = await Driver.getDriver(specName);
     loginActions = new LoginActions(driver);
     homeScreen = new HomeScreen(driver);
@@ -37,10 +37,11 @@ describe(specName, () => {
 
   afterEach(async () => {
     await Driver.attachScreenshots(driver, reporter);
+    await Driver.closeDrivers([driver]);
   });
 
   afterAll(async () => {
-    await Driver.closeDrivers([driver]);
+    
   });
 
   /**

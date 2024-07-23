@@ -19,7 +19,7 @@ let homeScreenActions: HomeScreenActions
 declare let reporter: any;
 const specName = 'Login app validation';
 describe(specName, () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
         driver = await Driver.getDriver(specName);
         loginActions = new LoginActions(driver);
         homeScreenActions = new HomeScreenActions(driver);
@@ -29,10 +29,11 @@ describe(specName, () => {
 
     afterEach(async () => {
         await Driver.attachScreenshots(driver, reporter);
+        await Driver.closeDrivers([driver]);
     });
 
-    afterEach(async () => {
-        await Driver.closeDrivers([driver]);
+    afterAll(async () => {
+        
     });
 
     /**

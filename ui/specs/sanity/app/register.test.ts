@@ -4,7 +4,7 @@
 
 
 import { Browser } from 'webdriverio';
-import { Driver, HomeActions, HomeScreen, HomeScreenActions, LoginActions, LoginScreen, OtpActions } from '../../../../uiExport';
+import { BaseScreen, Driver, HomeActions, HomeScreen, HomeScreenActions, LoginActions, LoginScreen, OtpActions } from '../../../../uiExport';
 import { RegisterActions } from '../../../screens/userActions/registerActions';
 import { expect } from 'chai';
 import testData from '../../../resources/testdata/qa/testData.qa.json';
@@ -20,28 +20,32 @@ let profileActions: ProfileActions;
 let registerActions: RegisterActions;
 let otpActions: OtpActions;
 let loginActions: LoginActions;
+let baseScreen: BaseScreen;
 
 
 declare let reporter: any;
 const specName = 'Register User';
 describe(specName, () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
         driver = await Driver.getDriver(specName);
+         baseScreen = new BaseScreen(driver);
         homeScreen = new HomeScreen(driver);
         homeScreenActions = new HomeScreenActions(driver);
         profileActions = new ProfileActions(driver);
         registerActions = new RegisterActions(driver);
         otpActions = new OtpActions(driver);
+        loginActions = new LoginActions(driver);
     });
+
 
 
     afterEach(async () => {
         await Driver.attachScreenshots(driver, reporter);
+         await Driver.closeDrivers([driver]);
     });
 
 
     afterAll(async () => {
-        await Driver.closeDrivers([driver]);
     });
 
     it("verify the input fields are present in register user screen", async () => {
@@ -71,7 +75,7 @@ describe(specName, () => {
     it("verify the register user feature with mobile num less than 10 digits", async () => {
         await homeScreenActions.navigateTo(await homeScreen.profileIcon());
         await registerActions.registerUser(testData.register_user_invalid_mob_num);
-        expect(await homeScreenActions.isRegSuccessMsgDisplayed()).to.be.true;
+        expect(await baseScreen.isDisplayed(await homeScreen.errorMsgForInvalidNumberEle())).to.be.true;
     })
 
 

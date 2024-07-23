@@ -156,30 +156,27 @@ describe(specName, () => {
 
 
   it('Verify user can search for items using the search bar', async () => {
-    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
-    await (await homeScreen.searchBtnEle()).setValue('shoe');
-    await driver.keys('Enter');
-    const searchResults = await productScreen.productTitleEle();
-    expect(searchResults).to.be.greaterThan(0);
+    await baseScreen.click(await homeScreen.exploreIconEle());
+    await (await exploreScreen.searchInputBoxEle()).setValue('shoe');
+    const searchResults = await productScreen.productTitleEles();
+    expect(searchResults.length).to.be.greaterThan(0);
   });
 
   it('Verify search results are relevant to the search term', async () => {
-    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
-    await (await homeScreen.searchBtnEle()).setValue('sneaker');
-    await driver.keys('Enter');
-    const productTitles = await productScreen.productTitleEle(); 
-    const productTitleText = await productTitles.getText();
+    await (await exploreScreen.searchInputBoxEle()).setValue('sneaker');
+    const productTitles = await productScreen.productTitleEles(); 
+    const productTitleText = await productTitles[0].getText();
     expect(productTitleText.toLowerCase()).to.include('sneaker');
   });
 
   it('Verify no results message is displayed for an invalid search term', async () => {
-    await homeScreenActions.navigateTo(await homeScreen.searchBtnEle());
     const invalidSearchTerm = 'invalidsearchterm';
-    await (await homeScreen.searchBtnEle()).setValue(invalidSearchTerm);
+    await (await exploreScreen.searchInputBoxEle()).setValue(invalidSearchTerm);
     await driver.keys('Enter');
     const noResultMessage = await productScreen.noResultMessage();
     expect(await baseScreen.isDisplayed(noResultMessage)).to.be.true;
     expect(await noResultMessage.getText()).to.equal('No products found.');
+    await exploreScreenActions.navigateBack(await exploreScreen.backBtnEle());
   });
 
   it('Verify homepage icons are displayed', async () => {
